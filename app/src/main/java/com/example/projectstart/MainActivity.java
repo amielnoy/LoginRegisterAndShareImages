@@ -11,6 +11,7 @@ import com.example.projectstart.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
+    Intent activityIntentRegisterUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menuitem_register:
                 Toast.makeText(this, "Register user...", Toast.LENGTH_SHORT).show();
-
+                activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
+                startActivity(activityIntentRegisterUser);
                 return true;
             case R.id.menuitem_search:
                 Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
