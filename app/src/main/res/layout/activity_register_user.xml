@@ -1,75 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_ground1"
     tools:context=".RegisterUserActivity">
-    <LinearLayout
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/signuptitle"
+        android:textSize="35dp"
+        android:text="Sign Up"
+        android:gravity="center">
+
+    </TextView>
 
 
-        <TextView
-            android:id="@+id/textViewUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="34dp"
-            tools:layout_editor_absoluteY="170dp" />
+    <EditText
+        android:id="@+id/editTextUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signuptitle"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Username" />
 
-        <TextView
 
-            android:id="@+id/textViewPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="34dp"
-            tools:layout_editor_absoluteY="280dp" />
+    <EditText
+        android:id="@+id/PasswordEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextUserName"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        android:text="Password" />
 
-        <EditText
-            android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            tools:layout_editor_absoluteX="124dp"
-            tools:layout_editor_absoluteY="347dp" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/PasswordEdit"
+        android:layout_centerHorizontal="true"
+        android:text="Button" />
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone"
-            tools:layout_editor_absoluteX="131dp"
-            tools:layout_editor_absoluteY="465dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            tools:layout_editor_absoluteX="131dp"
-            tools:layout_editor_absoluteY="270dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            tools:layout_editor_absoluteX="131dp"
-            tools:layout_editor_absoluteY="158dp" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="MyButton"
-        />
-    </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.projectstart;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import Data.DatabaseHelper;
 import Model.User;
+import Utill.Constants;
 
 public class RegisterUserActivity extends AppCompatActivity {
     DatabaseHelper db;
@@ -20,17 +22,18 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     TextView textViewLogin;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
         db = new DatabaseHelper(this);
-        editTextUsername = findViewById(R.id.editTextTextPersonName);
-        editTextEmail = findViewById(R.id.editTextTextEmailAddress);
-        editTextPassword = findViewById(R.id.editTextTextPassword);
-        editTextCnfPassword = findViewById(R.id.editTextPhone);
-        buttonRegister = findViewById(R.id.button);
+        editTextUsername = findViewById(R.id.editTextUserName);
+        //editTextEmail = findViewById(R.id.editTextTextEmailAddress);
+        editTextPassword = findViewById(R.id.PasswordEdit);
+        //editTextCnfPassword = findViewById(R.id.editTextPhone);
+        buttonRegister=findViewById(R.id.button);
 
 
 
@@ -39,13 +42,13 @@ public class RegisterUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User user = new User();
                 String userName = editTextUsername.getText().toString().trim();
-                String email = editTextEmail.getText().toString().trim();
+                //String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                String passwordConf = editTextCnfPassword.getText().toString().trim();
+                //String passwordConf = editTextCnfPassword.getText().toString().trim();
 
-                if (password.equals(passwordConf)) {
+                if (password.equals(Constants.KEY_PASSWORD)) {
                     user.setUserName(userName);
-                    user.setEmail(email);
+                    //user.setEmail(email);
 
                     user.setPassword(password);
                     long val = db.addUser(user);

@@ -9,6 +9,6 @@ public class Constants {
     //Table Columns
     public static final String KEY_ID = "id";
     public static final String KEY_USERNAME = "userName";
-    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_PASSWORD = "Password";
     public static final String KEY_EMAIL = "email";
 }
