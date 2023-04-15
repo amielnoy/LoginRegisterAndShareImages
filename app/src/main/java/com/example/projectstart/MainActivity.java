@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.projectstart.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
