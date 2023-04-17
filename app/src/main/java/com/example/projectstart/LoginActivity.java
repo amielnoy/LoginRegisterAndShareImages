@@ -2,7 +2,6 @@ package com.example.projectstart;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import Data.DataBaseInstance;
 import Data.DatabaseHelper;
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 Boolean res = db.checkUser(email, password,"");
                 User user = new User();
                 Log.d("IDdetails", String.valueOf(user.getId()));
-
+        final DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
 
                 if (res == true) {
                     Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
