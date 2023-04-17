@@ -2,7 +2,7 @@ package com.example.projectstart;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,7 +19,7 @@ import Utill.Constants;
 
 public class RegisterUserActivity extends AppCompatActivity {
     DatabaseHelper db;
-    EditText editTextUsername, editTextEmail, editTextPassword, editTextCnfPassword;
+    EditText editTextUsername, editTextRole, editTextPassword, editTextCnfPassword,editTextEmail;
     Button buttonRegister;
 
     TextView textViewLogin;
@@ -37,7 +37,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.PasswordEdit);
         //editTextCnfPassword = findViewById(R.id.editTextPhone);
         buttonRegister=findViewById(R.id.button);
-
+        editTextEmail=findViewById(R.id.EmailEdit);
+        editTextRole=findViewById(R.id.editRole);
 
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -45,14 +46,14 @@ public class RegisterUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 User user = new User();
                 String userName = editTextUsername.getText().toString().trim();
-                //String email = editTextEmail.getText().toString().trim();
+                String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                //String passwordConf = editTextCnfPassword.getText().toString().trim();
+                String role = editTextRole.getText().toString().trim();
 
                 if (password.equals(Constants.KEY_PASSWORD)) {
                     user.setUserName(userName);
-                    //user.setEmail(email);
-
+                    user.setEmail(email);
+                    user.setRole(role);
                     user.setPassword(password);
                     long val = db.addUser(user);
                     if (val > 0) {

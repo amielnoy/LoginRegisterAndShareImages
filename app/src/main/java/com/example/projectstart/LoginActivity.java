@@ -2,7 +2,7 @@ package com.example.projectstart;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import Data.DataBaseInstance;
 import Data.DatabaseHelper;
 import Model.User;
 
@@ -31,16 +32,16 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         //editTextCnfPassword = findViewById(R.id.editTextPhone);
         buttonLogin=findViewById(R.id.login_button);
-
+        db=DataBaseInstance.getDatabaseInstance();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editTextUserName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
+                //String role=editText
 
-
-                Boolean res = db.checkUser(email, password);
+                Boolean res = db.checkUser(email, password,"");
                 User user = new User();
                 Log.d("IDdetails", String.valueOf(user.getId()));
 

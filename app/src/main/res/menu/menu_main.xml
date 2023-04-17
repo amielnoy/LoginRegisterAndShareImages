@@ -13,6 +13,9 @@
         android:id="@+id/menuitem_register"
         android:title="Register" />
     <item
+        android:id="@+id/menuitem_userdetails"
+        android:title="UserDetails" />
+    <item
         android:id="@+id/menuitem_exit"
         android:title="Exit" />
 </menu>
