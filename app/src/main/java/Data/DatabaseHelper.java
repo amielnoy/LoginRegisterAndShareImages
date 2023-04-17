@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import Model.User;
@@ -75,8 +75,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(user.getId())});
     }
 
-
-
+    public Cursor getUserDetails()
+    {
+        String countQuery = "SELECT * FROM " + Constants.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        return cursor;
+    }
     public int getUsersCount() {
         String countQuery = "SELECT * FROM " + Constants.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -85,11 +90,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Boolean checkUser(String email, String password) {
+    public Boolean checkUser(String email, String password,String Role) {
         String[] columns = {Constants.KEY_ID};
         SQLiteDatabase db = getReadableDatabase();
         String selection = Constants.KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
-        String[] selectionArgs = {email, password};
+        String[] selectionArgs = {email, password,Role};
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
         cursor.close();
