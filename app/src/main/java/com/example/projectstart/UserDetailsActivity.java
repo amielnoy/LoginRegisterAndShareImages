@@ -35,7 +35,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
-
+        //to be deleted
         //editTextCnfPassword = findViewById(R.id.editTextPhone);
         buttonLogin=findViewById(R.id.UserDetails_title_button);
         UserDetails=findViewById(R.id.UserDetails_title);
