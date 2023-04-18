@@ -43,28 +43,32 @@ public class LoginActivity extends AppCompatActivity {
                 String email = editTextUserName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 //String role=editText
-                String userRole=db.getUserRole(email,password);
-                Boolean res = db.checkUser(email, password);
-                Log.d("IDdetails", String.valueOf(user.getId()));
-
-
-                if (res == true) {
-                    Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("textViewEmail", editTextUserName.getText().toString());
-                    b.putString("textViewPassword", editTextPassword.getText().toString());
-
-                    String y = db.selectOneUserSendUserName(email, password);
-                    int x = db.selectOneUserSendId(email,password);
-                    Log.d("TAG" , "ID =  " + x);
-
-                    b.putString("textViewUsername",y);
-                    b.putString("textViewId", String.valueOf(x));
-
-                    HomePage.putExtras(b);
-                    startActivity(HomePage);
-                } else {
+                String userRole = db.getUserRole(email, password);
+                if (userRole == "error in role!") {
                     Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
+                }else{
+                    Boolean res = db.checkUser(email, password);
+                    Log.d("IDdetails", String.valueOf(user.getId()));
+
+
+                    if (res == true) {
+                        Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("textViewEmail", editTextUserName.getText().toString());
+                        b.putString("textViewPassword", editTextPassword.getText().toString());
+
+                        String y = db.selectOneUserSendUserName(email, password);
+                        int x = db.selectOneUserSendId(email, password);
+                        Log.d("TAG", "ID =  " + x);
+
+                        b.putString("textViewUsername", y);
+                        b.putString("textViewId", String.valueOf(x));
+
+                        HomePage.putExtras(b);
+                        startActivity(HomePage);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
