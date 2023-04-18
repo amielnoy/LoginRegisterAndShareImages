@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
@@ -45,33 +46,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //String role=editText
-
                 Cursor userDetailsqueryResult = db.getUserDetails();
-                listview.
+                //listview
                 User user = new User();
                 Log.d("IDdetails", String.valueOf(user.getId()));
-
-
-                if (res == true) {
-                    Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("textViewEmail", editTextUserName.getText().toString());
-                    b.putString("textViewPassword", editTextPassword.getText().toString());
-
-                    String y = db.selectOneUserSendUserName(email, password);
-                    int x = db.selectOneUserSendId(email,password);
-                    Log.d("TAG" , "ID =  " + x);
-
-                    b.putString("textViewUsername",y);
-                    b.putString("textViewId", String.valueOf(x));
-
-                    HomePage.putExtras(b);
-                    startActivity(HomePage);
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
-                }
             }
         });
 

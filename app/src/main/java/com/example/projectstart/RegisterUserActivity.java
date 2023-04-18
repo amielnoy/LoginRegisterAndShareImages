@@ -2,7 +2,6 @@ package com.example.projectstart;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import Data.DatabaseHelper;
 import Model.User;
@@ -30,7 +31,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-
+        //Create new empty DB
         db = new DatabaseHelper(this);
         editTextUsername = findViewById(R.id.editTextUserName);
         //editTextEmail = findViewById(R.id.editTextTextEmailAddress);
