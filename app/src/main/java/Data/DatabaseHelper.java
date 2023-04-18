@@ -1,5 +1,7 @@
 package Data;
 
+import static Utill.Constants.KEY_EMAIL;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + Constants.KEY_ID + " INTEGER PRIMARY KEY,"
                 + Constants.KEY_USERNAME + " TEXT,"
                 + Constants.KEY_PASSWORD + " TEXT,"
-                + Constants.KEY_EMAIL + " TEXT UNIQUE,"
+                + KEY_EMAIL + " TEXT UNIQUE,"
                 + Constants.KEY_ROLE + " TEXT )";
         Log.d("TableCreated", "done");
         db.execSQL(CREATE_REGISTER_TABLE);
@@ -53,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_USERNAME, user.getUserName());
         values.put(Constants.KEY_PASSWORD, user.getPassword());
-        values.put(Constants.KEY_EMAIL, user.getEmail());
+        values.put(KEY_EMAIL, user.getEmail());
         values.put(Constants.KEY_ROLE, user.getRole());
         // Error
         long res = db.insert(Constants.TABLE_NAME, null, values);
@@ -73,11 +75,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Constants.KEY_USERNAME, user.getUserName());
         values.put(Constants.KEY_PASSWORD, user.getPassword());
-        values.put(Constants.KEY_EMAIL, user.getEmail());
+        values.put(KEY_EMAIL, user.getEmail());
         return db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=?",
                 new String[]{String.valueOf(user.getId())});
     }
-
+    public int getEmailByQuery(String email)
+    {
+        String emailFieldsQuery = "SELECT "+KEY_EMAIL+" FROM  "+
+                "where "+KEY_EMAIL+"="+email+ " "+ Constants.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(emailFieldsQuery, null);
+       int emailIndex=cursor.getColumnIndex(KEY_EMAIL);
+        String emailString=cursor.getString(emailIndex);
+        return emailString.length();
+    }
     public Cursor getUserDetails()
     {
         String allFieldsQuery = "SELECT * FROM " + Constants.TABLE_NAME;
@@ -96,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Boolean checkUser(String email, String password) {
         String[] columns = {Constants.KEY_ID};
         SQLiteDatabase db = getReadableDatabase();
-        String selection = Constants.KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
+        String selection = KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
         String[] selectionArgs = {email, password};
         Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
@@ -118,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         try {
             db = getReadableDatabase();
-            String selection = Constants.KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
+            String selection = KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
             String[] selectionArgs = {email, password};
             String allFieldsQuery = "SELECT * FROM " + Constants.TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
@@ -146,7 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String selectOneUserSendUserName(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + Constants.KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
@@ -164,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int selectOneUserSendId(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + Constants.KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;

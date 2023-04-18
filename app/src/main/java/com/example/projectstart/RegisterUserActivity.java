@@ -56,6 +56,12 @@ public class RegisterUserActivity extends AppCompatActivity {
                     user.setEmail(email);
                     user.setRole(role);
                     user.setPassword(password);
+                    int emailInsertionCondidateSize=db.getEmailByQuery(email);
+                    if(emailInsertionCondidateSize==0)
+                    {
+                        Toast.makeText(RegisterUserActivity.this, "Please insert a non exiting Email", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     long val = db.addUser(user);
                     if (val > 0) {
                         Toast.makeText(RegisterUserActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
