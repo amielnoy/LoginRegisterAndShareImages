@@ -31,7 +31,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-
+        //Create new empty DB
         db = new DatabaseHelper(this);
         editTextUsername = findViewById(R.id.editTextUserName);
         //editTextEmail = findViewById(R.id.editTextTextEmailAddress);

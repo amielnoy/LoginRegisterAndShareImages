@@ -46,16 +46,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //String role=editText
-
                 Cursor userDetailsqueryResult = db.getUserDetails();
                 //listview
                 User user = new User();
                 Log.d("IDdetails", String.valueOf(user.getId()));
-
-
-
             }
         });
 

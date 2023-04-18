@@ -38,14 +38,15 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
+                User user = new User();
                 String email = editTextUserName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 //String role=editText
-
-                Boolean res = db.checkUser(email, password,"");
-                User user = new User();
+                String userRole=db.getUserRole(email,password);
+                Boolean res = db.checkUser(email, password);
                 Log.d("IDdetails", String.valueOf(user.getId()));
-        final DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
+
 
                 if (res == true) {
                     Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
