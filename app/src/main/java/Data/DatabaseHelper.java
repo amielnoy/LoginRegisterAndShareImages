@@ -1,6 +1,7 @@
 package Data;
 
 import static Utill.Constants.KEY_EMAIL;
+import static Utill.Constants.TABLE_NAME;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //EMAIL must be unique
     @Override
     public void onCreate(SQLiteDatabase db) {
-        this.CREATE_REGISTER_TABLE = "CREATE TABLE " + Constants.TABLE_NAME + " ("
+        this.CREATE_REGISTER_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
                 + Constants.KEY_ID + " INTEGER PRIMARY KEY,"
                 + Constants.KEY_USERNAME + " TEXT,"
                 + Constants.KEY_PASSWORD + " TEXT,"
@@ -40,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + Constants.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
         onCreate(db);
     }
@@ -58,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_EMAIL, user.getEmail());
         values.put(Constants.KEY_ROLE, user.getRole());
         // Error
-        long res = db.insert(Constants.TABLE_NAME, null, values);
+        long res = db.insert(TABLE_NAME, null, values);
         Log.d("Saved!", "saved to DB");
         db.close();
         return res;
@@ -76,28 +77,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Constants.KEY_USERNAME, user.getUserName());
         values.put(Constants.KEY_PASSWORD, user.getPassword());
         values.put(KEY_EMAIL, user.getEmail());
-        return db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=?",
+        return db.update(TABLE_NAME, values, Constants.KEY_ID + "=?",
                 new String[]{String.valueOf(user.getId())});
     }
-    public int getEmailByQuery(String email)
+    public int getEmailCountByQuery(String email)
     {
-        String emailFieldsQuery = "SELECT "+KEY_EMAIL+" FROM  "+
-                "where "+KEY_EMAIL+"="+email+ " "+ Constants.TABLE_NAME;
+        String emailFieldsQuery = "SELECT count("+KEY_EMAIL+") FROM  "
+                +TABLE_NAME
+               + " where "+KEY_EMAIL+" = '"+email+ "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(emailFieldsQuery, null);
-       int emailIndex=cursor.getColumnIndex(KEY_EMAIL);
-        String emailString=cursor.getString(emailIndex);
-        return emailString.length();
+       int emailCount=cursor.getColumnIndex(KEY_EMAIL);
+
+        return emailCount;
     }
     public Cursor getUserDetails()
     {
-        String allFieldsQuery = "SELECT * FROM " + Constants.TABLE_NAME;
+        String allFieldsQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(allFieldsQuery, null);
         return cursor;
     }
     public int getUsersCount() {
-        String countQuery = "SELECT * FROM " + Constants.TABLE_NAME;
+        String countQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         return cursor.getCount();
@@ -109,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
         String[] selectionArgs = {email, password};
-        Cursor cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
         cursor.close();
         db.close();
@@ -131,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db = getReadableDatabase();
             String selection = KEY_EMAIL + "=?" + " and " + Constants.KEY_PASSWORD + "=?";
             String[] selectionArgs = {email, password};
-            String allFieldsQuery = "SELECT * FROM " + Constants.TABLE_NAME;
+            String allFieldsQuery = "SELECT * FROM " + TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
 
             //cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
@@ -157,17 +159,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String selectOneUserSendUserName(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
-        while (c != null) {
-            x = Integer.parseInt(c.getString(c.getColumnIndex(Constants.KEY_ID)));
-            y = c.getString(c.getColumnIndex(Constants.KEY_USERNAME));
-            Log.d("tagOneUser", Integer.toString(x) );
-            Log.d("tagOneUser", y );
-            break;
+        while (c != null ) {
+            int columnUserIdIndex=c.getColumnIndex(Constants.KEY_ID);
+            if(columnUserIdIndex>=0) {
+                x = Integer.parseInt(c.getString(columnUserIdIndex));
+                int columnUserNameIndex= c.getColumnIndex(Constants.KEY_USERNAME);
+                y = c.getString(columnUserNameIndex);
+                Log.d("tagOneUser", Integer.toString(x));
+                Log.d("tagOneUser", y);
+                break;
+            }
         }
         c.moveToNext();
         return y;
@@ -175,14 +181,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int selectOneUserSendId(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + Constants.TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
         while (c != null) {
-            x = Integer.parseInt(c.getString(c.getColumnIndex(Constants.KEY_ID)));
-            y = c.getString(c.getColumnIndex(Constants.KEY_USERNAME));
+            int columnIdIndex= c.getColumnIndex(Constants.KEY_ID);
+            if(columnIdIndex>=0)
+                x = Integer.parseInt(c.getString(columnIdIndex));
+            int columnUserNameIndex=c.getColumnIndex(Constants.KEY_USERNAME);
+            if(columnUserNameIndex>=0)
+                y = c.getString(columnUserNameIndex);
             Log.d("tagOneUser", Integer.toString(x) );
             Log.d("tagOneUser", y );
             break;
