@@ -44,14 +44,11 @@ public class LoginActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString().trim();
                 //String role=editText
                 String userRole = db.getUserRole(email, password);
-                if (userRole == "error in role!") {
-                    Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
-                }else{
-                    Boolean res = db.checkUser(email, password);
-                    Log.d("IDdetails", String.valueOf(user.getId()));
 
+                Boolean res = db.checkUser(email, password);
+                Log.d("IDdetails", String.valueOf(user.getId()));
 
-                    if (res == true) {
+                if (res == true) {
                         Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
                         Bundle b = new Bundle();
                         b.putString("textViewEmail", editTextUserName.getText().toString());
@@ -70,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
                     }
                 }
-            }
         });
 
     }
