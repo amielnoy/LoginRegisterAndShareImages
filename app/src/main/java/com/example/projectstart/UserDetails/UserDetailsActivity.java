@@ -1,15 +1,13 @@
-package com.example.projectstart;
+package com.example.projectstart.UserDetails;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,19 +15,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
+import com.example.projectstart.R;
+import com.example.projectstart.RegisterUserActivity;
+
+import java.util.ArrayList;
 
 import Data.DataBaseInstance;
 import Data.DatabaseHelper;
 import Model.User;
-import Utill.Constants;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
-    Button buttonLogin;
+    Button button;
     TextView UserDetails;
     DatabaseHelper db;
-    ListView listview;
+    ListView listviewUsers;
+    ArrayList<User> arrayOfUsers;
     Intent activityIntentLogin, activityIntentRegisterUser,activityIntentUserDetails;
 
     @Override
@@ -38,23 +39,13 @@ public class UserDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_details);
         //to be deleted
         //editTextCnfPassword = findViewById(R.id.editTextPhone);
-        buttonLogin=findViewById(R.id.UserDetails_title_button);
-        UserDetails=findViewById(R.id.UserDetails_title);
-        listview=findViewById(R.id.ListView);
-        db= DataBaseInstance.getDatabaseInstance();
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String role=editText
-                Cursor userDetailsqueryResult = db.getUserDetails();
-                //listview
-                User user = new User();
-                Log.d("IDdetails", String.valueOf(user.getId()));
-            }
-        });
-
-
+        //button=findViewById(R.id.my_button);
+       // UserDetails=findViewById(R.id.UserDetails_title);
+        listviewUsers=findViewById(R.id.ListViewUsers);
+         DatabaseHelper db =new DatabaseHelper(this);
+        arrayOfUsers=db.getAllUsers();
+        UserDetailsAdapter ad=new UserDetailsAdapter(this,R.layout.activity_user_details,arrayOfUsers);
+        listviewUsers.setAdapter(ad);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

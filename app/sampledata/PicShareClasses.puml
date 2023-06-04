@@ -1,0 +1,150 @@
+@startuml
+'https://plantuml.com/class-diagram
+class AppCompatActivity
+class SQLiteOpenHelper
+class User
+class Constants
+class LoginActivity
+class MainActivity
+class RegisterUserActivity
+class UserDetailsActivity
+class Picture
+class TakePictureActivity
+class DataBaseInstance
+class ShowUserPicturesActivity
+AppCompatActivity <|-- UserDetailsActivity
+AppCompatActivity <|-- RegisterUserActivity
+AppCompatActivity <|-- MainActivity
+AppCompatActivity <|-- LoginActivity
+AppCompatActivity <|-- ShowUserPicturesActivity
+AppCompatActivity <|-- TakePictureActivity
+SQLiteOpenHelper <|-- DatabaseHelper
+
+
+
+class Picture {
+    private String pictureName;
+    private long pictureId;
+    private byte[] picture;
+
+    public Picture()
+    public Picture(long pictureId, String pictureName, byte[] picture)
+    public long getPictureId()
+    public void setPictureId(long pictureId)
+    public String getPictureName()
+    public void setPictureName(String name)
+    public byte[] getPicture()
+    public void setPicture(byte[] picture)
+    public String toString()
+}
+class UserDetailsActivity{
+ArrayList<User>
+}
+class ShowUserPicturesActivity{
+ArrayList<ImageDetail>
+
+}
+class LoginActivity{
+ EditText editTextUserName, editTextPassword;
+    Button buttonLogin;
+    TextView textViewRegister;
+    DatabaseHelper db;
+    Intent activityIntentLogin, activityIntentRegisterUser;
+
+    protected void onCreate(Bundle savedInstanceState)
+     public void onClick(View v)
+      public boolean onCreateOptionsMenu(Menu menu)
+      public boolean onOptionsItemSelected(MenuItem item)
+}
+class MainActivity{
+    Intent activityIntentLogin;
+    Intent activityIntentRegisterUser;
+
+     protected void onCreate(Bundle savedInstanceState)
+     public boolean onCreateOptionsMenu(Menu menu)
+     public boolean onOptionsItemSelected(MenuItem item)
+    }
+    class RegisterUserActivity{
+     DatabaseHelper db;
+        EditText editTextUsername, editTextRole, editTextPassword, editTextCnfPassword,editTextEmail;
+        Button buttonRegister;
+        Intent activityIntentRegisterUser,activityIntentLogin;
+
+         protected void onCreate(Bundle savedInstanceState)
+          public void onClick(View v)
+          public boolean onCreateOptionsMenu(Menu menu)
+          public boolean onOptionsItemSelected(MenuItem item)
+
+    }
+    class UserDetailsActivity{
+     Button buttonLogin;
+        TextView UserDetails;
+        DatabaseHelper db;
+        ListView listview;
+        Intent activityIntentLogin, activityIntentRegisterUser,activityIntentUserDetails;
+
+        protected void onCreate(Bundle savedInstanceState)
+         public void onClick(View v)
+         public boolean onCreateOptionsMenu(Menu menu)
+         public boolean onOptionsItemSelected(MenuItem item)
+
+    }
+    class DatabaseHelper{
+    private Context ctx;
+    String CREATE_REGISTER_TABLE;
+
+      public DatabaseHelper(@Nullable Context context)
+      public void onCreate(SQLiteDatabase db)
+      public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+      public long addUser(User user)
+      public int updateUser(User user)
+      public Cursor getUserDetails()
+      public int getUsersCount()
+      public Boolean checkUser(String email, String password)
+      public String getUserRole(String email, String password)
+      public String selectOneUserSendUserName(String email, String password)
+      public int selectOneUserSendId(String email, String password)
+
+    }
+    class DataBaseInstance{
+    private static DatabaseHelper globalDbInstance;
+    private static User currentUser;
+
+     public static DatabaseHelper getDatabaseInstance()
+     public void setDatabaseInstance(DatabaseHelper db)
+     public void setUser(User user)
+     public User getUser()
+    }
+    class User{
+        private int id;
+        private String Role;
+        private String userName;
+        private String password;
+        private String email ;
+
+        public User(int id, String userName, String password, String email,String Role)
+        public User()
+        public int getId()
+        public void setId(int id)
+        public String getUserName()
+        public void setUserName(String userName)
+        public String getPassword()
+        public void setPassword(String password)
+        public String getEmail()
+        public void setEmail(String email)
+        public String getRole()
+        public void setRole(String Role)
+        public String toString()
+    }
+    class Constants{
+     public static final int DB_VERSION = 1;
+        public static final String DB_NAME = "register.db";
+        public static final String TABLE_NAME = "Users";
+        public static final String KEY_ID = "id";
+        public static final String KEY_USERNAME = "userName";
+        public static final String KEY_PASSWORD = "Password";
+        public static final String KEY_EMAIL = "email";
+        public static final String KEY_ROLE = "role";
+    }
+
+@enduml

@@ -11,4 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_user_details">UserDetailsActivity</string>
     <string name="title_activity_user_details1">UserDetailsActivity1</string>
+    <string name="hello">Hello</string>
+    <string name="id">Id</string>
+    <string name="textview">TextView</string>
 </resources>

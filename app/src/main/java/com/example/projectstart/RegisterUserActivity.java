@@ -23,7 +23,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     EditText editTextUsername, editTextRole, editTextPassword, editTextCnfPassword,editTextEmail;
     Button buttonRegister;
 
-    TextView textViewLogin;
+
     Intent activityIntentRegisterUser,activityIntentLogin;
 
     @SuppressLint("MissingInflatedId")

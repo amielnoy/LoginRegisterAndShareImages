@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+:Main Admin: as Admin
+(Login to the application) as (Use)
+(Register)
+(TakePicture)
+User -> (Start)
+(Start) -->(Register)
+(Start)--> (Use)
+(Use)-->(TakePicture)
+Admin-->(Start)
+Admin ---> (Use)
+
+note right of (Register) : Admin can always use Register.
+
+note right of (Use)
+A note can also
+be on several lines
+end note
+
+note "This note is connected\nto several objects." as N2
+(Start) .. N2
+N2 .. (Use)
+@enduml

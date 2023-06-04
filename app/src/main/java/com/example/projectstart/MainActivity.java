@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.UserDetails.UserDetailsActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
     Intent activityIntentRegisterUser;
+    Intent activityIntentUserDetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menuitem_search:
                 Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menuitem_userdetails:
+                Toast.makeText(this, "Show all Users Details...", Toast.LENGTH_SHORT).show();
+                activityIntentUserDetails = new Intent(this, UserDetailsActivity.class);
+                startActivity(activityIntentUserDetails);
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();

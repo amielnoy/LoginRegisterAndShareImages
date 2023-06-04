@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import Model.User;
 import Utill.Constants;
 
@@ -85,6 +87,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(allFieldsQuery, null);
         return cursor;
     }
+    public ArrayList<User> getAllUsers()
+    {
+        ArrayList<User>arrayOfUser=new ArrayList<>();
+        String st="select * from "+Constants.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(st,null);
+        while (cursor.moveToNext())
+        {
+            User user=new User();
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("id"))));
+            user.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("userName")));
+            user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("Password")));
+            user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+            user.setRole(cursor.getString(cursor.getColumnIndexOrThrow("role")));
+            arrayOfUser.add(user);
+        }
+        return arrayOfUser;
+
+
+
+    }
     public int getUsersCount() {
         String countQuery = "SELECT * FROM " + Constants.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -152,8 +175,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int x = 0 ;
         String y = "";
         while (c != null) {
-            x = Integer.parseInt(c.getString(c.getColumnIndex(Constants.KEY_ID)));
-            y = c.getString(c.getColumnIndex(Constants.KEY_USERNAME));
+            int userIdColumnIndex=c.getColumnIndex(Constants.KEY_ID);
+            if(userIdColumnIndex>=0)
+              x = Integer.parseInt(c.getString(userIdColumnIndex));
+            int userNameColumnIndex=c.getColumnIndex(Constants.KEY_USERNAME);
+            if(userIdColumnIndex>=0)
+              y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );
             Log.d("tagOneUser", y );
             break;
@@ -170,8 +197,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int x = 0 ;
         String y = "";
         while (c != null) {
-            x = Integer.parseInt(c.getString(c.getColumnIndex(Constants.KEY_ID)));
-            y = c.getString(c.getColumnIndex(Constants.KEY_USERNAME));
+            int userIdColumnIndex=c.getColumnIndex(Constants.KEY_ID);
+            if(userIdColumnIndex>=0)
+              x = Integer.parseInt(c.getString(userIdColumnIndex));
+            int userNameColumnIndex=c.getColumnIndex(Constants.KEY_ID);
+            if(userNameColumnIndex>=0)
+              y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );
             Log.d("tagOneUser", y );
             break;
