@@ -25,7 +25,7 @@
         android:id="@+id/editTextUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="Email"
         android:layout_below="@+id/login_title"
         android:layout_marginTop="83dp"
         android:inputType="textPersonName"/>
