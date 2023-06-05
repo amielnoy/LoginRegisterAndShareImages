@@ -16,6 +16,10 @@
         android:id="@+id/menuitem_userdetails"
         android:title="UserDetails" />
     <item
+        android:id="@+id/menuitem_take_picture"
+        android:title="Take a Picture" />
+    <item
         android:id="@+id/menuitem_exit"
         android:title="Exit" />
+
 </menu>

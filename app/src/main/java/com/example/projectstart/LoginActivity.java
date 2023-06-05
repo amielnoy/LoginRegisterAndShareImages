@@ -24,7 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewRegister;
     DatabaseHelper db;
     Intent activityIntentLogin, activityIntentRegisterUser;
+    private static String currentLoggedInUserName;
 
+    public static String getCurrentLoggedInUserName(){
+        return currentLoggedInUserName;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 User user = new User();
                 String email = editTextUserName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                //String role=editText
-                String userRole = db.getUserRole(email, password);
+
 
                 Boolean res = db.checkUser(email, password);
                 Log.d("IDdetails", String.valueOf(user.getId()));
@@ -54,11 +57,12 @@ public class LoginActivity extends AppCompatActivity {
                         b.putString("textViewEmail", editTextUserName.getText().toString());
                         b.putString("textViewPassword", editTextPassword.getText().toString());
 
-                        String y = db.selectOneUserSendUserName(email, password);
+                        String userName = db.selectOneUserSendUserName(email, password);
+                        currentLoggedInUserName=userName;
                         int x = db.selectOneUserSendId(email, password);
                         Log.d("TAG", "ID =  " + x);
 
-                        b.putString("textViewUsername", y);
+                        b.putString("textViewUsername", userName);
                         b.putString("textViewId", String.valueOf(x));
 
                         HomePage.putExtras(b);

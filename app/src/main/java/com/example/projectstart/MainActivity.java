@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 import com.example.projectstart.UserDetails.UserDetailsActivity;
 
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
     Intent activityIntentRegisterUser;
     Intent activityIntentUserDetails;
+    Intent activityIntentTakeAPicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Show all Users Details...", Toast.LENGTH_SHORT).show();
                 activityIntentUserDetails = new Intent(this, UserDetailsActivity.class);
                 startActivity(activityIntentUserDetails);
+                return true;
+            case R.id.menuitem_take_picture:
+                Toast.makeText(this, "Taking a picture...", Toast.LENGTH_SHORT).show();
+                activityIntentTakeAPicture = new Intent(this, TakePictureActivity.class);
+                startActivity(activityIntentTakeAPicture);
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();

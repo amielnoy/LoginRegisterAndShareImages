@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +52,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString().trim();
                 String role = editTextRole.getText().toString().trim();
 
-                if (password.equals(Constants.KEY_PASSWORD)) {
+                if (password.equals(Constants.IMAGES_USER_ID_KEY)) {
                     user.setUserName(userName);
                     user.setEmail(email);
                     user.setRole(role);
