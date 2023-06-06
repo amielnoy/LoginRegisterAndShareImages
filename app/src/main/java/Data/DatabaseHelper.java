@@ -1,7 +1,15 @@
 package Data;
 
+import static Utill.Constants.IMAGES_KEY_ID;
+import static Utill.Constants.IMAGES_USER_ID_KEY;
 import static Utill.Constants.USERS_KEY_EMAIL;
 import static Utill.Constants.IMAGES_TABLE_NAME;
+import static Utill.Constants.USERS_KEY_ID;
+import static Utill.Constants.USERS_KEY_PASSWORD;
+import static Utill.Constants.USERS_KEY_ROLE;
+import static Utill.Constants.USERS_KEY_USERNAME;
+import static Utill.Constants.USERS_TABLE_NAME;
+import static Utill.Constants.USER_IMAGE_KEY;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -21,7 +29,7 @@ import Utill.Constants;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context ctx;
-    String CREATE_REGISTER_TABLE;
+    String CREATE_USERS_TABLE;
     String CREATE_USER_IMAGES_TABLE;
     public DatabaseHelper(@Nullable Context context) {
         super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
@@ -33,22 +41,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //EMAIL must be unique
     @Override
     public void onCreate(SQLiteDatabase db) {
-        this.CREATE_REGISTER_TABLE = "CREATE TABLE " + IMAGES_TABLE_NAME + " ("
-                + Constants.IMAGES_KEY_ID + " INTEGER PRIMARY KEY,"
-                + Constants.IMAGES_KEY_USERNAME + " TEXT,"
-                + Constants.IMAGES_USER_ID_KEY + " TEXT,"
+        this.CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS " + USERS_TABLE_NAME + " ("
+                + USERS_KEY_ID + " INTEGER PRIMARY KEY,"
+                + USERS_KEY_USERNAME + " TEXT,"
+                + USERS_KEY_PASSWORD + " TEXT,"
                 + USERS_KEY_EMAIL + " TEXT UNIQUE,"
-                + Constants.USERS_KEY_ROLE + " TEXT )";
+                + USERS_KEY_ROLE + " TEXT )";
         Log.d("TableCreated", "done");
-        db.execSQL(CREATE_REGISTER_TABLE);
+        db.execSQL(CREATE_USERS_TABLE);
         //Image table creation
-        this.CREATE_USER_IMAGES_TABLE = "CREATE TABLE " + IMAGES_TABLE_NAME + " ("
-                + Constants.IMAGES_KEY_ID + " INTEGER PRIMARY KEY,"
-                + Constants.IMAGES_KEY_USERNAME + " TEXT,"
-                + Constants.IMAGES_USER_ID_KEY + " TEXT)";
+        this.CREATE_USER_IMAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + IMAGES_TABLE_NAME + " ("
+                + IMAGES_KEY_ID + " INTEGER PRIMARY KEY,"
+                + USER_IMAGE_KEY + " TEXT,"
+                + IMAGES_USER_ID_KEY + " TEXT)";
         Log.d("TableCreated "+IMAGES_TABLE_NAME, "done");
-        db.execSQL(CREATE_REGISTER_TABLE);
-    }`
+        db.execSQL(CREATE_USER_IMAGES_TABLE);
+    }
 
 
     @Override
@@ -66,8 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Constants.IMAGES_KEY_USERNAME, user.getUserName());
-        values.put(Constants.IMAGES_USER_ID_KEY, user.getPassword());
+        values.put(USER_IMAGE_KEY, user.getUserName());
+        values.put(IMAGES_USER_ID_KEY, user.getPassword());
         values.put(USERS_KEY_EMAIL, user.getEmail());
         values.put(Constants.USERS_KEY_ROLE, user.getRole());
         // Error
@@ -86,17 +94,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Constants.IMAGES_KEY_USERNAME, user.getUserName());
-        values.put(Constants.IMAGES_USER_ID_KEY, user.getPassword());
+        values.put(USER_IMAGE_KEY, user.getUserName());
+        values.put(IMAGES_USER_ID_KEY, user.getPassword());
         values.put(USERS_KEY_EMAIL, user.getEmail());
-        return db.update(IMAGES_TABLE_NAME, values, Constants.IMAGES_KEY_ID + "=?",
+        return db.update(IMAGES_TABLE_NAME, values, IMAGES_KEY_ID + "=?",
                 new String[]{String.valueOf(user.getId())});
     }
     public int getEmailCountByQuery(String email)
     {
         String emailFieldsQuery = "SELECT "+"count("
                 +Constants.USERS_KEY_EMAIL +") FROM  "
-                + IMAGES_TABLE_NAME
+                + USERS_TABLE_NAME
                + " where "+ USERS_KEY_EMAIL +"= '"+email+ "'";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(emailFieldsQuery, null);
@@ -141,9 +149,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public Boolean checkUser(String email, String password) {
-        String[] columns = {Constants.IMAGES_KEY_ID};
+        String[] columns = {IMAGES_KEY_ID};
         SQLiteDatabase db = getReadableDatabase();
-        String selection = USERS_KEY_EMAIL + "=?" + " and " + Constants.IMAGES_USER_ID_KEY + "=?";
+        String selection = USERS_KEY_EMAIL + "=?" + " and " + IMAGES_USER_ID_KEY + "=?";
         String[] selectionArgs = {email, password};
         Cursor cursor = db.query(IMAGES_TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
@@ -159,13 +167,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String getUserRole(String email, String password) {
         int count=-1;
         String userRole;
-        String[] columns = {Constants.IMAGES_KEY_ID,Constants.USERS_KEY_ROLE,};
+        String[] columns = {IMAGES_KEY_ID,Constants.USERS_KEY_ROLE,};
         SQLiteDatabase db=null;
         Cursor cursor=null;
 
         try {
             db = getReadableDatabase();
-            String selection = USERS_KEY_EMAIL + "=?" + " and " + Constants.IMAGES_USER_ID_KEY + "=?";
+            String selection = USERS_KEY_EMAIL + "=?" + " and " + IMAGES_USER_ID_KEY + "=?";
             String[] selectionArgs = {email, password};
             String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
@@ -175,6 +183,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             if (count > 0)
                 userRole = cursor.getString(1);
+            else
+                userRole="error in role!";
+            return userRole;
+        }catch (Exception e){
+            e.printStackTrace();
+            userRole="error in role!";
+            return userRole;
+        }finally {
+            cursor.close();
+            db.close();
+        }
+    }
+    public String getUserRole(String email) {
+        int count=-1;
+        String userRole;
+
+        SQLiteDatabase db=null;
+        Cursor cursor=null;
+
+        try {
+            db = getReadableDatabase();
+            String selection = USERS_KEY_EMAIL + "=?";
+            String[] selectionArgs = {email};
+            String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
+            cursor = db.rawQuery(allFieldsQuery, null);
+
+            //cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+            count = cursor.getCount();
+
+            if (count > 0)
+                userRole = cursor.getString(4);
             else
                 userRole="error in role!";
             return userRole;
@@ -225,16 +264,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String selectOneUserSendUserName(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
         while (c != null) {
-            int userIdColumnIndex=c.getColumnIndex(Constants.IMAGES_KEY_ID);
+            int userIdColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
             if(userIdColumnIndex>=0)
               x = Integer.parseInt(c.getString(userIdColumnIndex));
-            int userNameColumnIndex=c.getColumnIndex(Constants.IMAGES_KEY_USERNAME);
+            int userNameColumnIndex=c.getColumnIndex(USER_IMAGE_KEY);
             if(userIdColumnIndex>=0)
               y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );
@@ -247,16 +286,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int selectOneUserSendId(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ Constants.IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
         while (c != null) {
-            int userIdColumnIndex=c.getColumnIndex(Constants.IMAGES_KEY_ID);
+            int userIdColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
             if(userIdColumnIndex>=0)
               x = Integer.parseInt(c.getString(userIdColumnIndex));
-            int userNameColumnIndex=c.getColumnIndex(Constants.IMAGES_KEY_ID);
+            int userNameColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
             if(userNameColumnIndex>=0)
               y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );
@@ -271,8 +310,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getReadableDatabase();
         String sql_Insert="INSERT INTO contacts(Name,Img) values(?,?)";
         SQLiteStatement statement=db.compileStatement(sql_Insert);
-        statement.bindString(0,Name);
-        statement.bindBlob(1,Img);
+        statement.bindBlob(2,imageArray);
         statement.execute();
     }
 

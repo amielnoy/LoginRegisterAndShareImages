@@ -67,9 +67,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
                 startActivity(activityIntentRegisterUser);
                 return true;
-            case R.id.menuitem_search:
-                Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
-                return true;
+
             case R.id.menuitem_userdetails:
                 Toast.makeText(this, "Entering User Details...", Toast.LENGTH_SHORT).show();
                 activityIntentUserDetails = new Intent(this, UserDetailsActivity.class);

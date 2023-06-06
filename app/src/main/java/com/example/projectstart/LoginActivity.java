@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
+
 import Data.DataBaseInstance;
 import Data.DatabaseHelper;
 import Model.User;
@@ -21,52 +23,76 @@ import Model.User;
 public class LoginActivity extends AppCompatActivity {
     EditText editTextUserName, editTextPassword;
     Button buttonLogin;
-    TextView textViewRegister;
     DatabaseHelper db;
     Intent activityIntentLogin, activityIntentRegisterUser;
     private static String currentLoggedInUserName;
+    private static String currentLoggedInEmail;
+
+    private static boolean is_master_user_password;
 
     public static String getCurrentLoggedInUserName(){
         return currentLoggedInUserName;
     }
+    public static String getCurrentLoggedInEmail(){
+        return currentLoggedInEmail;
+    }
+
+    public static boolean getCurrentLoggedInMaster(){
+        return is_master_user_password;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        db = new DatabaseHelper(LoginActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         editTextUserName = findViewById(R.id.editTextUserName);
         editTextPassword = findViewById(R.id.password);
         //editTextCnfPassword = findViewById(R.id.editTextPhone);
         buttonLogin=findViewById(R.id.login_button);
-        db=DataBaseInstance.getDatabaseInstance();
+        //db=DataBaseInstance.getDatabaseInstance();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final DatabaseHelper db = new DatabaseHelper(LoginActivity.this);
+
                 User user = new User();
                 String email = editTextUserName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
 
 
-                Boolean res = db.checkUser(email, password);
-                Log.d("IDdetails", String.valueOf(user.getId()));
 
-                if (res == true) {
-                        Intent HomePage = new Intent(LoginActivity.this, MainActivity.class);
+                is_master_user_password=true;
+                if(email=="Password" && password=="Password")
+                    is_master_user_password=true;
+                Boolean res=false;
+                Log.d("IDdetails", String.valueOf(user.getId()));
+                if(!is_master_user_password)
+                    res = db.checkUser(email, password);
+                if (res == true || is_master_user_password) {
+                        Intent AdminHomePage = new Intent(LoginActivity.this, TakePictureActivity.class);
+                        //Intent OtherPage = new Intent(LoginActivity.this, MainActivity.class);
                         Bundle b = new Bundle();
                         b.putString("textViewEmail", editTextUserName.getText().toString());
                         b.putString("textViewPassword", editTextPassword.getText().toString());
 
-                        String userName = db.selectOneUserSendUserName(email, password);
-                        currentLoggedInUserName=userName;
-                        int x = db.selectOneUserSendId(email, password);
-                        Log.d("TAG", "ID =  " + x);
+                        String userName;
+                        int userId;
+                        if(is_master_user_password==false) {
+                            userName = db.selectOneUserSendUserName(email, password);
+                            currentLoggedInUserName = userName;
+                            currentLoggedInEmail = email;
+                            userId = db.selectOneUserSendId(email, password);
+                        }else {
+                            userName = "Admin";
+                            userId=10000;
+                        }
+                        Log.d("TAG", "ID =  " + userId);
 
                         b.putString("textViewUsername", userName);
-                        b.putString("textViewId", String.valueOf(x));
+                        b.putString("textViewId", String.valueOf(userId));
 
-                        HomePage.putExtras(b);
-                        startActivity(HomePage);
+                        AdminHomePage.putExtras(b);
+                        startActivity(AdminHomePage);
                     } else {
                         Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_LONG).show();
                     }
@@ -76,9 +102,14 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-
+        //db=DataBaseInstance.getDatabaseInstance()
+        String role=db.getUserRole(currentLoggedInEmail);
+        if(role=="admin")
+            getMenuInflater().inflate(R.menu.menu_login,menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_take_a_pic,menu);
         return super.onCreateOptionsMenu(menu);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,9 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
                 startActivity(activityIntentRegisterUser);
                 return true;
-            case R.id.menuitem_search:
-                Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
-                return true;
+
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
                 this.finishAffinity();

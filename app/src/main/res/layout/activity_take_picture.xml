@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="@+id/textViewUseName"
         app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="@+id/textViewUseName"
-        app:srcCompat="@drawable/back_ground1"
+        app:srcCompat="@drawable/and_now_give_me_a_smile"
         tools:layout_editor_absoluteY="99dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -50,7 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="TextView"
+        android:text="Click on the picture to TAKE A PHOTO"
+        android:textStyle="bold"
+        android:textColor="#0000FF"
         app:layout_constraintEnd_toEndOf="@+id/save_taken_image"
         app:layout_constraintStart_toStartOf="@+id/save_taken_image"
         app:layout_constraintTop_toBottomOf="@+id/take_picture_View" />

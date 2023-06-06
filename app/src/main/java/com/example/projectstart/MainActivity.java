@@ -14,9 +14,7 @@ import com.example.projectstart.UserDetails.UserDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
-    Intent activityIntentRegisterUser;
-    Intent activityIntentUserDetails;
-    Intent activityIntentTakeAPicture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,24 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 activityIntentLogin = new Intent(this, LoginActivity.class);
                 startActivity(activityIntentLogin);
                 return true;
-            case R.id.menuitem_register:
-                Toast.makeText(this, "Register user...", Toast.LENGTH_SHORT).show();
-                activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
-                startActivity(activityIntentRegisterUser);
-                return true;
-            case R.id.menuitem_search:
-                Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.menuitem_userdetails:
-                Toast.makeText(this, "Show all Users Details...", Toast.LENGTH_SHORT).show();
-                activityIntentUserDetails = new Intent(this, UserDetailsActivity.class);
-                startActivity(activityIntentUserDetails);
-                return true;
-            case R.id.menuitem_take_picture:
-                Toast.makeText(this, "Taking a picture...", Toast.LENGTH_SHORT).show();
-                activityIntentTakeAPicture = new Intent(this, TakePictureActivity.class);
-                startActivity(activityIntentTakeAPicture);
-                return true;
+
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
                 this.finishAffinity();

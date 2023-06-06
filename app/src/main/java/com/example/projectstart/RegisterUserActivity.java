@@ -52,19 +52,18 @@ public class RegisterUserActivity extends AppCompatActivity {
                 String password = editTextPassword.getText().toString().trim();
                 String role = editTextRole.getText().toString().trim();
 
-                if (password.equals(Constants.IMAGES_USER_ID_KEY)) {
+                if (password.equals(Constants.USERS_KEY_PASSWORD)) {
                     user.setUserName(userName);
                     user.setEmail(email);
                     user.setRole(role);
                     user.setPassword(password);
-                    int numberOfRegisteredUsers=db.getUsersCount();
-                    if(numberOfRegisteredUsers>0) {
-                        int emailInsertionCondidateSize = db.getEmailCountByQuery(email);
-                        if (emailInsertionCondidateSize == 1) {
+
+                    int emailInsertionCandidateSize = db.getEmailCountByQuery(email);
+                    if (emailInsertionCandidateSize == 1) {
                             Toast.makeText(RegisterUserActivity.this, "Please insert a non existing Email", Toast.LENGTH_SHORT).show();
                             return;
-                        }
                     }
+
                     long val = db.addUser(user);
                     if (val > 0) {
                         Toast.makeText(RegisterUserActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
@@ -86,7 +85,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_login,menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -103,9 +102,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                 Toast.makeText(this, "Register user...", Toast.LENGTH_SHORT).show();
                 activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
                 startActivity(activityIntentRegisterUser);
-                return true;
-            case R.id.menuitem_search:
-                Toast.makeText(this, "searching...", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
