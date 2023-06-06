@@ -74,12 +74,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(USER_IMAGE_KEY, user.getUserName());
-        values.put(IMAGES_USER_ID_KEY, user.getPassword());
+        values.put(USERS_KEY_USERNAME, user.getUserName());
+        values.put(USERS_KEY_PASSWORD, user.getPassword());
         values.put(USERS_KEY_EMAIL, user.getEmail());
         values.put(Constants.USERS_KEY_ROLE, user.getRole());
         // Error
-        long res = db.insert(IMAGES_TABLE_NAME, null, values);
+        long res = db.insert(USERS_TABLE_NAME, null, values);
         Log.d("Saved!", "saved to DB");
         db.close();
         return res;
@@ -149,16 +149,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public Boolean checkUser(String email, String password) {
-        String[] columns = {IMAGES_KEY_ID};
+        String[] columns = {USERS_KEY_EMAIL};
         SQLiteDatabase db = getReadableDatabase();
-        String selection = USERS_KEY_EMAIL + "=?" + " and " + IMAGES_USER_ID_KEY + "=?";
+        String selection = USERS_KEY_EMAIL + "=?" + " and " + USERS_KEY_PASSWORD + "=?";
         String[] selectionArgs = {email, password};
-        Cursor cursor = db.query(IMAGES_TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(USERS_TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
         cursor.close();
         db.close();
 
-        if (count > 0)
+        if (count == 1)
             return true;
         else
             return false;
@@ -167,15 +167,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String getUserRole(String email, String password) {
         int count=-1;
         String userRole;
-        String[] columns = {IMAGES_KEY_ID,Constants.USERS_KEY_ROLE,};
+        String[] columns = {USERS_KEY_EMAIL,USERS_KEY_PASSWORD,};
         SQLiteDatabase db=null;
         Cursor cursor=null;
 
         try {
             db = getReadableDatabase();
-            String selection = USERS_KEY_EMAIL + "=?" + " and " + IMAGES_USER_ID_KEY + "=?";
+            String selection = USERS_KEY_EMAIL + "=?" + " and " + USERS_KEY_PASSWORD + "=?";
             String[] selectionArgs = {email, password};
-            String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
+            String allFieldsQuery = "SELECT * FROM " + USERS_TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
 
             //cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
@@ -206,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db = getReadableDatabase();
             String selection = USERS_KEY_EMAIL + "=?";
             String[] selectionArgs = {email};
-            String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
+            String allFieldsQuery = "SELECT * FROM " + USERS_TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
 
             //cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
@@ -238,7 +238,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db = getReadableDatabase();
             String selection = USERS_KEY_EMAIL + "=?";
             String[] selectionArgs = {email};
-            String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
+            String allFieldsQuery = "SELECT * FROM " + USERS_TABLE_NAME;
             cursor = db.rawQuery(allFieldsQuery, null);
 
             //cursor = db.query(Constants.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
@@ -264,16 +264,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String selectOneUserSendUserName(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + USERS_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ USERS_KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
         while (c != null) {
-            int userIdColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
+            int userIdColumnIndex=c.getColumnIndex(USERS_KEY_ID);
             if(userIdColumnIndex>=0)
               x = Integer.parseInt(c.getString(userIdColumnIndex));
-            int userNameColumnIndex=c.getColumnIndex(USER_IMAGE_KEY);
+            int userNameColumnIndex=c.getColumnIndex(USERS_KEY_USERNAME);
             if(userIdColumnIndex>=0)
               y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );
@@ -286,16 +286,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int selectOneUserSendId(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM " + IMAGES_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ IMAGES_USER_ID_KEY + " = '"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + USERS_TABLE_NAME + " WHERE " + USERS_KEY_EMAIL + " = '"+email.trim()+"'" +" and "+ USERS_KEY_PASSWORD + " = '"+password.trim()+"'" , null);
         c.moveToFirst();
 
         int x = 0 ;
         String y = "";
         while (c != null) {
-            int userIdColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
+            int userIdColumnIndex=c.getColumnIndex(USERS_KEY_ID);
             if(userIdColumnIndex>=0)
               x = Integer.parseInt(c.getString(userIdColumnIndex));
-            int userNameColumnIndex=c.getColumnIndex(IMAGES_KEY_ID);
+            int userNameColumnIndex=c.getColumnIndex(USERS_KEY_USERNAME);
             if(userNameColumnIndex>=0)
               y = c.getString(userNameColumnIndex);
             Log.d("tagOneUser", Integer.toString(x) );

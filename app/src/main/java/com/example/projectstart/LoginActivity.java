@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private static String currentLoggedInUserName;
     private static String currentLoggedInEmail;
 
-    private static boolean is_master_user_password;
+    private static boolean is_master_user_password=true;
 
     public static String getCurrentLoggedInUserName(){
         return currentLoggedInUserName;
@@ -61,9 +61,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-                is_master_user_password=true;
-                if(email=="Password" && password=="Password")
+
+                if((email.equals("Password")) && (password.equals("Password")))
                     is_master_user_password=true;
+                else
+                    is_master_user_password=false;
                 Boolean res=false;
                 Log.d("IDdetails", String.valueOf(user.getId()));
                 if(!is_master_user_password)
@@ -103,8 +105,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //db=DataBaseInstance.getDatabaseInstance()
-        String role=db.getUserRole(currentLoggedInEmail);
-        if(role=="admin")
+        //String role=db.getUserRole(currentLoggedInEmail);
+
+        if(is_master_user_password)
             getMenuInflater().inflate(R.menu.menu_login,menu);
         else
             getMenuInflater().inflate(R.menu.menu_take_a_pic,menu);
