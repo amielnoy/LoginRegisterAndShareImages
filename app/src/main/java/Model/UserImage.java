@@ -1,20 +1,19 @@
 package Model;
 
-public class Image {
+public class UserImage {
         private int id;
 
-        private Image last_taken_image;
+        private UserImage last_taken_image;
+        private byte [] userImageByteArray;
         private String userName;
 
 
-        public Image(int id, Image last_taken_image, String userName) {
+        public UserImage(int id, UserImage last_taken_image, String userName) {
             this.id = id;
             this.last_taken_image=last_taken_image;
             this.userName = userName;
 
         }
-
-
 
         public int getId() {
             return id;
@@ -32,11 +31,14 @@ public class Image {
             this.userName = userName;
         }
 
-        public Image getLastTakenImage() {
-        return last_taken_image;
+        public byte [] getLastTakenUserImage() {
+        return userImageByteArray;
     }
 
-        public void setLastTakenImage(Image last_taken_image) {
+        public void setUserImage(byte[] imageBytesArray) {
+            userImageByteArray= imageBytesArray;
+    }
+        public void setLastTakenImage(UserImage last_taken_image) {
 
             this.last_taken_image = last_taken_image;
         }

@@ -24,6 +24,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import Model.User;
+import Model.UserImage;
 import Utill.Constants;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -312,6 +313,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteStatement statement=db.compileStatement(sql_Insert);
         statement.bindBlob(2,imageArray);
         statement.execute();
+    }
+
+    public void addContact_with_img(String Name,String Email,String Phone,String Street, String City,byte[] Img)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        String sql_Insert="INSERT INTO contacts(Name,Email,Phone,Street,City,Img) values(?,?,?,?,?,?)";
+        SQLiteStatement statement=db.compileStatement(sql_Insert);
+        statement.bindString(1,Name);
+        statement.bindString(2,Email);
+        statement.bindString(3,Phone);
+        statement.bindString(4,Street);
+        statement.bindString(5,City);
+        statement.bindBlob(6,Img);
+        statement.execute();
+    }
+    public ArrayList<UserImage> getAllContacts()
+    {
+        ArrayList<UserImage>userImagesDetailsArrray=new ArrayList<>();
+        String st="select * from "+CREATE_USER_IMAGES_TABLE;
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor cursor=db.rawQuery(st,null);
+
+        while (cursor.moveToNext())
+        {
+            UserImage currUserImage=new UserImage(0,null,"");
+            currUserImage.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("UserName")));
+            currUserImage.setUserImage((cursor.getBlob(cursor.getColumnIndexOrThrow("Img"))));
+
+            userImagesDetailsArrray.add(currUserImage);
+        }
+        return userImagesDetailsArrray;
+
+
+
     }
 
 
