@@ -23,7 +23,7 @@ public class DisplayAllUserImagesActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_display_all_user_images);
-            listViewsUserImages=findViewById(R.id.listViewContacts);
+            listViewsUserImages=findViewById(R.id.Listviewuserimages);
             DatabaseHelper db= new DatabaseHelper(this);
             userImagesArray=db.getAllContacts();
             UserImagesAdapter ad=new UserImagesAdapter(this,R.layout.activity_user_image_layout,userImagesArray);

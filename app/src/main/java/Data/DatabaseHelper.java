@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import android.database.sqlite.SQLiteStatement;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -309,9 +310,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void add_user_details_with_img(String userName, byte [] imageArray){
         SQLiteDatabase db=this.getReadableDatabase();
-        String sql_Insert="INSERT INTO contacts(Name,Img) values(?,?)";
+        String sql_Insert="INSERT INTO "+ IMAGES_TABLE_NAME+"(UserImage,UserId) values(?,?)";
         SQLiteStatement statement=db.compileStatement(sql_Insert);
-        statement.bindBlob(2,imageArray);
+        statement.bindBlob(1,imageArray);
+        userName="Liad";
+        statement.bindString(2,userName);
+
         statement.execute();
     }
 

@@ -37,13 +37,14 @@ public class TakePictureActivity extends AppCompatActivity {
     byte [] imageByteArray;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_picture);
         userNameTextView=findViewById(R.id.textViewUseName);
         takenImageView=findViewById(R.id.take_picture_View);
-        gotoDisplayAllUserImagesButton=findViewById(R.id.save_taken_image_button);
+        //gotoDisplayAllUserImagesButton=findViewById(R.id.save_taken_image_button);
     }
 
     byte[] contactArray;
@@ -55,9 +56,9 @@ public class TakePictureActivity extends AppCompatActivity {
         {
             Bitmap userBitmap=(Bitmap) data.getExtras().get("data");
             takenImageView.setImageBitmap(userBitmap);
-            ByteArrayOutputStream baos=new ByteArrayOutputStream();
-            userBitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
-            imageByteArray =baos.toByteArray();
+            ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+            userBitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            imageByteArray =byteArrayOutputStream.toByteArray();
         }
     }
 
