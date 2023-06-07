@@ -8,9 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
-import com.example.projectstart.UserDetails.UserDetailsActivity;
-
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;

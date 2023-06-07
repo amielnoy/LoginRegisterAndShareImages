@@ -6,16 +6,14 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projectstart.LoginActivity;
 import com.example.projectstart.R;
-import com.example.projectstart.TakeAPictureAndShowOnList.UserImagesAdapter;
 
 import java.util.ArrayList;
 
 import Data.DatabaseHelper;
 import Model.UserImage;
 
-public class DisplayAllUserImages extends AppCompatActivity {
+public class DisplayAllUserImagesActivity extends AppCompatActivity {
     ListView listViewsUserImages;
     ArrayList<UserImage>userImagesArray;
     @SuppressLint("MissingInflatedId")
@@ -24,7 +22,7 @@ public class DisplayAllUserImages extends AppCompatActivity {
 
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_display_all_contacts);
+            setContentView(R.layout.activity_display_all_user_images);
             listViewsUserImages=findViewById(R.id.listViewContacts);
             DatabaseHelper db= new DatabaseHelper(this);
             userImagesArray=db.getAllContacts();
@@ -34,4 +32,6 @@ public class DisplayAllUserImages extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
+
 }

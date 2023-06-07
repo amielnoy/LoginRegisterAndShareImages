@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,14 +33,17 @@ public class TakePictureActivity extends AppCompatActivity {
     Intent activityIntentUserDetails;
     Intent activityIntentTakeAPicture;
 
-    byte [] imageArray;
+    Button gotoDisplayAllUserImagesButton;
+    byte [] imageByteArray;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_picture);
         userNameTextView=findViewById(R.id.textViewUseName);
         takenImageView=findViewById(R.id.take_picture_View);
-
+        gotoDisplayAllUserImagesButton=findViewById(R.id.save_taken_image_button);
     }
 
     byte[] contactArray;
@@ -53,7 +57,7 @@ public class TakePictureActivity extends AppCompatActivity {
             takenImageView.setImageBitmap(userBitmap);
             ByteArrayOutputStream baos=new ByteArrayOutputStream();
             userBitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
-            imageArray=baos.toByteArray();
+            imageByteArray =baos.toByteArray();
         }
     }
 
@@ -66,10 +70,18 @@ public class TakePictureActivity extends AppCompatActivity {
     public void buttonSaveWithImageListener(View view)
     {
         DatabaseHelper dbHelper=new DatabaseHelper(this);
-        dbHelper.add_user_details_with_img(LoginActivity.getCurrentLoggedInUserName(),this.imageArray);
+        dbHelper.add_user_details_with_img(LoginActivity.getCurrentLoggedInUserName(),this.imageByteArray);
     }
 
-    @Override
+    public void DisplayAllUserImagesButtonListener(View view) {
+        Intent intent=new Intent(this, DisplayAllUserImagesActivity.class);
+        startActivity(intent);
+    }
+
+
+
+
+            @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(LoginActivity.getCurrentLoggedInMaster())
            getMenuInflater().inflate(R.menu.menu_take_a_pic_admin,menu);

@@ -34,15 +34,17 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
-        android:id="@+id/save_taken_image"
+        android:id="@+id/save_taken_image_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save the picture"
+        android:onClick="DisplayAllUserImagesButtonListener"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUseName"
+
         app:layout_constraintVertical_bias="0.959" />
 
     <TextView
