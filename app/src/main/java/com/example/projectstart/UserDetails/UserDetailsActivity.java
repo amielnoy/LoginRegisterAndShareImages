@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.LoginActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity;
 
@@ -49,7 +50,10 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        if(LoginActivity.getCurrentLoggedInMaster())
+            getMenuInflater().inflate(R.menu.menu_take_a_pic_admin,menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_for_regular_user,menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -59,7 +63,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         {
             case R.id.menuitem_login:
                 Toast.makeText(this, "login user...", Toast.LENGTH_SHORT).show();
-                activityIntentLogin = new Intent(this, UserDetailsActivity.class);
+                activityIntentLogin = new Intent(this, LoginActivity.class);
                 startActivity(activityIntentLogin);
                 return true;
             case R.id.menuitem_register:

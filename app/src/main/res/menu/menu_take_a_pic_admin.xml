@@ -5,11 +5,6 @@
         android:id="@+id/menuitem_login"
         android:title="Login" />
     <item
-        android:id="@+id/menuitem_search"
-        android:icon="?android:attr/actionModeWebSearchDrawable"
-        android:title="Search"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/menuitem_register"
         android:title="Register" />
     <item

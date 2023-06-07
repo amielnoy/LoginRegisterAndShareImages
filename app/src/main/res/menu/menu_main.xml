@@ -4,20 +4,7 @@
     <item
         android:id="@+id/menuitem_login"
         android:title="Login" />
-<!--    <item-->
-<!--        android:id="@+id/menuitem_search"-->
-<!--        android:icon="?android:attr/actionModeWebSearchDrawable"-->
-<!--        android:title="Search"-->
-<!--        app:showAsAction="ifRoom" />-->
-<!--    <item-->
-<!--        android:id="@+id/menuitem_register"-->
-<!--        android:title="Register" />-->
-<!--    <item-->
-<!--        android:id="@+id/menuitem_userdetails"-->
-<!--        android:title="UserDetails" />-->
-<!--    <item-->
-<!--        android:id="@+id/menuitem_take_picture"-->
-<!--        android:title="Take a Picture" />-->
+
     <item
         android:id="@+id/menuitem_exit"
         android:title="Exit" />
