@@ -2,6 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menuitem_take_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Take a Picture" />
+    <item
         android:id="@+id/menuitem_login"
         android:title="Login" />
     <item
@@ -11,8 +16,8 @@
         android:id="@+id/menuitem_userdetails"
         android:title="UserDetails" />
     <item
-        android:id="@+id/menuitem_take_picture"
-        android:title="Take a Picture" />
+        android:id="@+id/menuitem_show_picture"
+        android:title="Show a Picture" />
     <item
         android:id="@+id/menuitem_exit"
         android:title="Exit" />

@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                             userId = db.selectOneUserSendId(email, password);
                         }else {
                             userName = "Admin";
+                            currentLoggedInUserName = userName;
                             userId=10000;
                         }
                         Log.d("TAG", "ID =  " + userId);

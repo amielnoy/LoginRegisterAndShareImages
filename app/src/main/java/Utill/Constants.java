@@ -20,5 +20,5 @@ public class Constants {
     //Table Columns
     public static final String IMAGES_KEY_ID = "ImageId";
     public static final String USER_IMAGE_KEY = "UserImage";
-    public static final String IMAGES_USER_ID_KEY = "UserId";
+    public static final String IMAGES_USER_ID_KEY = "UserName";
 }

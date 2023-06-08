@@ -6,71 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".TakeAPictureAndShowOnList.TakePictureActivity">
 
-    <TextView
-        android:id="@+id/textView_title"
-        android:layout_width="88dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="48dp"
-        android:text="Take a picture"
-        app:layout_constraintBottom_toTopOf="@+id/take_picture_View"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
     <ImageView
         android:id="@+id/take_picture_View"
         android:layout_width="395dp"
         android:layout_height="514dp"
         android:foregroundGravity="center"
         android:onClick="imgClickHandler"
-        app:layout_constraintBaseline_toBottomOf="@id/textView_title"
-        app:layout_constraintEnd_toEndOf="@+id/textViewUseName"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="@+id/textViewUseName"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/and_now_give_me_a_smile"
-        tools:layout_editor_absoluteY="-120dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <Button
-        android:id="@+id/save_taken_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="DisplayAllUserImagesButtonListener"
-        android:text="Save the picture"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-
-        />
+        tools:layout_editor_absoluteX="0dp"
+        tools:srcCompat="@drawable/and_now_give_me_a_smile" />
 
     <TextView
         android:id="@+id/textViewUseName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="Click on the picture to TAKE A PHOTO"
+        android:layout_width="284dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="28dp"
+        android:text="Click picture to TAKE A PHOTO"
         android:textColor="#0000FF"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/save_taken_image_button"
-        app:layout_constraintHorizontal_bias="0.612"
-        app:layout_constraintStart_toStartOf="@+id/save_taken_image_button"
+        app:layout_constraintEnd_toEndOf="@+id/take_picture_View"
+        app:layout_constraintHorizontal_bias="0.423"
+        app:layout_constraintStart_toStartOf="@+id/take_picture_View"
         app:layout_constraintTop_toBottomOf="@+id/take_picture_View" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="ButtonSave"
+        android:layout_marginTop="60dp"
         android:onClick="buttonSaveWithImageListener"
-        app:layout_constraintBottom_toTopOf="@+id/save_taken_image_button"
+        android:text="ButtonSave"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewUseName"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="@+id/textViewUseName"
-        app:layout_constraintTop_toTopOf="@+id/textViewUseName"
-        app:layout_constraintVertical_bias="0.628" />
+        app:layout_constraintTop_toTopOf="@+id/textViewUseName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

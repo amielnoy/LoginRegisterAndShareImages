@@ -1,22 +1,45 @@
-package com.example.projectstart;
+package com.example.projectstart.MainActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.projectstart.LoginActivity;
+import com.example.projectstart.MusicService;
+import com.example.projectstart.R;
 
 
 public class MainActivity extends AppCompatActivity {
     Intent activityIntentLogin;
 
+    TextView playMessageTextView;
+
+    Button startButton,stopButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        playMessageTextView=findViewById(R.id.message_music);
+        startButton=findViewById(R.id.button_play);
+        stopButton=findViewById(R.id.button_stop);
+    }
 
+    public void onStart(View view) {
+        Intent intent=new Intent(getApplicationContext(), MusicService.class);
+        startService(intent);
+    }
+
+    public void onStop(View view) {
+        Intent intent=new Intent(getApplicationContext(),MusicService.class);
+        stopService(intent);
     }
 
     @Override

@@ -19,7 +19,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import android.database.sqlite.SQLiteStatement;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -121,27 +120,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(allFieldsQuery, null);
         return cursor;
     }
-    public ArrayList<User> getAllUsers()
+    public ArrayList<UserImage> getAllUserImages()
     {
-        ArrayList<User>arrayOfUser=new ArrayList<>();
-        String st="select * from "+ IMAGES_TABLE_NAME;
+        UserImage userImage;
+        ArrayList<UserImage>arrayOfUserImages=new ArrayList<>();
+        String query_statement="select * from "+ IMAGES_TABLE_NAME;
+
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor=db.rawQuery(st,null);
+        Cursor cursor=db.rawQuery(query_statement,null);
         while (cursor.moveToNext())
         {
-            User user=new User();
-            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("id"))));
-            user.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("userName")));
-            user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("Password")));
-            user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
-            user.setRole(cursor.getString(cursor.getColumnIndexOrThrow("role")));
-            arrayOfUser.add(user);
+            userImage=new UserImage(0,null,"");
+            userImage.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("ImageId"))));
+            userImage.setUserImage(cursor.getBlob(cursor.getColumnIndexOrThrow("UserImage")));
+            userImage.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("UserName")));
+
+            arrayOfUserImages.add(userImage);
         }
-        return arrayOfUser;
+        return arrayOfUserImages;
 
 
 
     }
+
+
     public int getUsersCount() {
         String countQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -310,10 +313,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void add_user_details_with_img(String userName, byte [] imageArray){
         SQLiteDatabase db=this.getReadableDatabase();
-        String sql_Insert="INSERT INTO "+ IMAGES_TABLE_NAME+"(UserImage,UserId) values(?,?)";
+        String sql_Insert="INSERT INTO "+ IMAGES_TABLE_NAME+"(UserImage,UserName) values(?,?)";
         SQLiteStatement statement=db.compileStatement(sql_Insert);
         statement.bindBlob(1,imageArray);
-        userName="Liad";
+        //userName="Liad";
         statement.bindString(2,userName);
 
         statement.execute();

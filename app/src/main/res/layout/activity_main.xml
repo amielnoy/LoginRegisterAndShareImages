@@ -4,4 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity.MainActivity">
+
+    <TextView
+        android:id="@+id/message_music"
+        android:layout_width="86dp"
+        android:layout_height="176dp"
+        android:layout_marginTop="76dp"
+        android:text="Play Music"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Play Music"
+        android:onClick="onStart"
+        app:layout_constraintEnd_toEndOf="@+id/message_music"
+        app:layout_constraintStart_toStartOf="@+id/message_music"
+        app:layout_constraintTop_toBottomOf="@+id/message_music" />
+
+    <Button
+        android:id="@+id/button_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:text="Stop music"
+        android:onClick="onStop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_play"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/button_play"
+        app:layout_constraintTop_toBottomOf="@+id/button_play"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

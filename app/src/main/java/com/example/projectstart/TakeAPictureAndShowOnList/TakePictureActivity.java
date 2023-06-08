@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.example.projectstart.LoginActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity;
-import com.example.projectstart.UserDetails.UserDetailsActivity;
+import com.example.projectstart.ShowUserImageActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -28,10 +28,14 @@ public class TakePictureActivity extends AppCompatActivity {
     public static int REQUESTR_IMAGE=100;
     TextView userNameTextView;
     ImageView takenImageView;
+
+    //ImageView user_image_view;
     Intent activityIntentLogin;
     Intent activityIntentRegisterUser;
     Intent activityIntentUserDetails;
     Intent activityIntentTakeAPicture;
+
+    Intent activityIntentShowAPicture;
 
     Button gotoDisplayAllUserImagesButton;
     byte [] imageByteArray;
@@ -44,6 +48,8 @@ public class TakePictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_picture);
         userNameTextView=findViewById(R.id.textViewUseName);
         takenImageView=findViewById(R.id.take_picture_View);
+        //user_image_view=findViewById(R.id.user_show_image_view);
+        System.out.println("debug");
         //gotoDisplayAllUserImagesButton=findViewById(R.id.save_taken_image_button);
     }
 
@@ -74,15 +80,12 @@ public class TakePictureActivity extends AppCompatActivity {
         dbHelper.add_user_details_with_img(LoginActivity.getCurrentLoggedInUserName(),this.imageByteArray);
     }
 
-    public void DisplayAllUserImagesButtonListener(View view) {
-        Intent intent=new Intent(this, DisplayAllUserImagesActivity.class);
-        startActivity(intent);
-    }
 
 
 
 
-            @Override
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if(LoginActivity.getCurrentLoggedInMaster())
            getMenuInflater().inflate(R.menu.menu_take_a_pic_admin,menu);
@@ -105,15 +108,15 @@ public class TakePictureActivity extends AppCompatActivity {
                 activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
                 startActivity(activityIntentRegisterUser);
                 return true;
-            case R.id.menuitem_userdetails:
-                Toast.makeText(this, "Show all Users Details...", Toast.LENGTH_SHORT).show();
-                activityIntentUserDetails = new Intent(this, UserDetailsActivity.class);
-                startActivity(activityIntentUserDetails);
-                return true;
             case R.id.menuitem_take_picture:
                 Toast.makeText(this, "Taking a picture...", Toast.LENGTH_SHORT).show();
                 activityIntentTakeAPicture = new Intent(this, TakePictureActivity.class);
                 startActivity(activityIntentTakeAPicture);
+                return true;
+            case R.id.menuitem_show_picture:
+                Toast.makeText(this, "Displaying user  picture...", Toast.LENGTH_SHORT).show();
+                activityIntentShowAPicture = new Intent(this, ShowUserImageActivity.class);
+                startActivity(activityIntentShowAPicture);
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();

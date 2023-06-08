@@ -12,6 +12,9 @@
         android:theme="@style/Theme.Projectstart"
         tools:targetApi="31">
         <activity
+            android:name=".ShowUserImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".TakeAPictureAndShowOnList.TakePictureActivity"
             android:exported="false" />
         <activity
@@ -27,7 +30,7 @@
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".MusicService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
