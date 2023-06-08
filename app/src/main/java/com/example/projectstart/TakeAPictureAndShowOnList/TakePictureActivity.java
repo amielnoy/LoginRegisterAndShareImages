@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.example.projectstart.LoginActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity;
-import com.example.projectstart.ShowUserImageActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -29,15 +27,14 @@ public class TakePictureActivity extends AppCompatActivity {
     TextView userNameTextView;
     ImageView takenImageView;
 
-    //ImageView user_image_view;
     Intent activityIntentLogin;
     Intent activityIntentRegisterUser;
-    Intent activityIntentUserDetails;
+
     Intent activityIntentTakeAPicture;
 
     Intent activityIntentShowAPicture;
 
-    Button gotoDisplayAllUserImagesButton;
+
     byte [] imageByteArray;
 
 

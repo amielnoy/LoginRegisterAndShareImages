@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Projectstart"
         tools:targetApi="31">
         <activity
-            android:name=".ShowUserImageActivity"
+            android:name=".TakeAPictureAndShowOnList.ShowUserImageActivity"
             android:exported="false" />
         <activity
             android:name=".TakeAPictureAndShowOnList.TakePictureActivity"
