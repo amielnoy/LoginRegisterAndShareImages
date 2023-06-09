@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuitem_userdetails"
-        android:title="UserDetails" />
+        android:id="@+id/menuitem_show_picture"
+        android:title="Show a Picture" />
     <item
         android:id="@+id/menuitem_take_picture"
         android:title="Take a Picture" />
