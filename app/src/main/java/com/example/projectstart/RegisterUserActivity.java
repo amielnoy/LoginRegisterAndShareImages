@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectstart.MainActivity.MainActivity;
+import com.example.projectstart.TakeAPictureAndShowOnList.ShowUserImageActivity;
+import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 
 import Data.DatabaseHelper;
 import Model.User;
@@ -23,9 +25,15 @@ public class RegisterUserActivity extends AppCompatActivity {
     DatabaseHelper db;
     EditText editTextUsername, editTextRole, editTextPassword, editTextCnfPassword,editTextEmail;
     Button buttonRegister;
+    Intent activityIntentLogin;
+    Intent activityIntentRegisterUser;
+
+    Intent activityIntentTakeAPicture;
+
+    Intent activityIntentShowAPicture;
 
 
-    Intent activityIntentRegisterUser,activityIntentLogin;
+//    Intent activityIntentRegisterUser,activityIntentLogin;
 
 
 
@@ -85,9 +93,15 @@ public class RegisterUserActivity extends AppCompatActivity {
         });
 
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_login,menu);
+        if(LoginActivity.getCurrentLoggedInMaster())
+            getMenuInflater().inflate(R.menu.menu_take_a_pic_admin,menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_login,menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -105,10 +119,21 @@ public class RegisterUserActivity extends AppCompatActivity {
                 activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
                 startActivity(activityIntentRegisterUser);
                 return true;
+            case R.id.menuitem_take_picture:
+                Toast.makeText(this, "Taking a picture...", Toast.LENGTH_SHORT).show();
+                activityIntentTakeAPicture = new Intent(this, TakePictureActivity.class);
+                startActivity(activityIntentTakeAPicture);
+                return true;
+            case R.id.menuitem_show_picture:
+                Toast.makeText(this, "Displaying user  picture...", Toast.LENGTH_SHORT).show();
+                activityIntentShowAPicture = new Intent(this, ShowUserImageActivity.class);
+                startActivity(activityIntentShowAPicture);
+                return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
                 this.finishAffinity();
                 return true;
+
 
         }
 
