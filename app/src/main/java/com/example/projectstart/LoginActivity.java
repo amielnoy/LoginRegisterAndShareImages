@@ -45,9 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         editTextUserName = findViewById(R.id.editTextUserName);
         editTextPassword = findViewById(R.id.password);
-        //editTextCnfPassword = findViewById(R.id.editTextPhone);
         buttonLogin=findViewById(R.id.login_button);
-        //db=DataBaseInstance.getDatabaseInstance();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //db=DataBaseInstance.getDatabaseInstance()
-        //String role=db.getUserRole(currentLoggedInEmail);
+
 
         if(is_master_user_password)
             getMenuInflater().inflate(R.menu.menu_login,menu);

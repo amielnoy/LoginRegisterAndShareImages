@@ -18,11 +18,6 @@
             android:name=".TakeAPictureAndShowOnList.TakePictureActivity"
             android:exported="false" />
         <activity
-            android:name=".UserDetails.UserDetailsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_user_details"
-            android:theme="@style/Theme.Projectstart" />
-        <activity
             android:name=".RegisterUserActivity"
             android:exported="false" />
         <activity
