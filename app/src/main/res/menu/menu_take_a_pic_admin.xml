@@ -16,6 +16,9 @@
         android:id="@+id/menuitem_show_picture"
         android:title="Show a Picture" />
     <item
+        android:id="@+id/menuitem_show_user_images"
+        android:title="Show User Images" />
+    <item
         android:id="@+id/menuitem_exit"
         android:title="Exit" />
 

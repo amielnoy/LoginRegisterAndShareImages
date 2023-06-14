@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         this.CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS " + USERS_TABLE_NAME + " ("
                 + USERS_KEY_ID + " INTEGER PRIMARY KEY,"
-                + USERS_KEY_USERNAME + " TEXT,"
+                + USERS_KEY_USERNAME + " TEXT UNIQUE,"
                 + USERS_KEY_PASSWORD + " TEXT,"
                 + USERS_KEY_EMAIL + " TEXT UNIQUE,"
                 + USERS_KEY_ROLE + " TEXT )";
@@ -113,13 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailCount;
     }
-    public Cursor getUserDetails()
-    {
-        String allFieldsQuery = "SELECT * FROM " + IMAGES_TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(allFieldsQuery, null);
-        return cursor;
-    }
+
+
     public ArrayList<UserImage> getAllUserImages()
     {
         UserImage userImage;
@@ -140,9 +135,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return arrayOfUserImages;
 
+    }
 
+    public ArrayList<UserImage> getAllSpecificUserImages(String userName)
+    {
+        UserImage userImage;
+        ArrayList<UserImage>arrayOfUserImages=new ArrayList<>();
+        String query_statement="select * from "
+                + IMAGES_TABLE_NAME
+                + " "+"where "
+                + IMAGES_USER_ID_KEY+" ='"+userName+"'";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(query_statement,null);
+        while (cursor.moveToNext())
+        {
+            userImage=new UserImage(0,null,"");
+            userImage.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow("ImageId"))));
+            userImage.setUserImage(cursor.getBlob(cursor.getColumnIndexOrThrow("UserImage")));
+            userImage.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("UserName")));
+
+            arrayOfUserImages.add(userImage);
+        }
+        return arrayOfUserImages;
 
     }
+    public ArrayList<User> getAllUsers()
+    {
+        User user;
+        ArrayList<User>arrayOfUser=new ArrayList<>();
+        String query_statement="select * from "+ USERS_TABLE_NAME;
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(query_statement,null);
+        while (cursor.moveToNext())
+        {
+            user=new User(0,"","","","");
+
+            int indexOfUserId=cursor.getColumnIndexOrThrow("id");
+            String userId=cursor.getString(indexOfUserId);
+            user.setId(Integer.parseInt(userId));
+
+            String userName=cursor.getString(cursor.getColumnIndexOrThrow("userName"));
+            user.setUserName(userName);
+            user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("Password")));
+            user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+            user.setRole(cursor.getString(cursor.getColumnIndexOrThrow("role")));
+            arrayOfUser.add(user);
+
+            //cursor.moveToNext();
+        }
+        return arrayOfUser;
+
+    }
+
 
 
     public int getUsersCount() {
@@ -158,6 +206,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String selection = USERS_KEY_EMAIL + "=?" + " and " + USERS_KEY_PASSWORD + "=?";
         String[] selectionArgs = {email, password};
+        Cursor cursor = db.query(USERS_TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (count == 1)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean checkIsUserExistsByUserName(String userName) {
+        String[] columns = {USERS_KEY_USERNAME};
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = USERS_KEY_USERNAME + "=?" ;
+        String[] selectionArgs = {userName};
         Cursor cursor = db.query(USERS_TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         int count = cursor.getCount();
         cursor.close();
@@ -252,11 +316,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (count > 0)
                 userName = cursor.getString(1);
             else
-                userName="error in role!";
+                userName="no such username!";
             return userName;
         }catch (Exception e){
             e.printStackTrace();
-            userName="error in role!";
+            userName="no such username!!";
             return userName;
         }finally {
             cursor.close();

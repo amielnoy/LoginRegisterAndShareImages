@@ -1,4 +1,4 @@
-package com.example.projectstart;
+package com.example.projectstart.MainActivity;
 
 import android.app.Service;
 import android.content.Intent;

@@ -11,8 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.projectstart.LoginActivity;
-import com.example.projectstart.MusicService;
+import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.R;
 
 

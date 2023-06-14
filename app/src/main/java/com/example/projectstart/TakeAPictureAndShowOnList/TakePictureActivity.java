@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.projectstart.LoginActivity;
+import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.R;
-import com.example.projectstart.RegisterUserActivity;
+import com.example.projectstart.ReisterUserActivity.RegisterUserActivity;
 
 import java.io.ByteArrayOutputStream;
 

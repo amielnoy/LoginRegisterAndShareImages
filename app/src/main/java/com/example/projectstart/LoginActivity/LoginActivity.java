@@ -1,4 +1,4 @@
-package com.example.projectstart;
+package com.example.projectstart.LoginActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.R;
+import com.example.projectstart.ReisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 
 import Data.DatabaseHelper;

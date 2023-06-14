@@ -1,4 +1,4 @@
-package com.example.projectstart;
+package com.example.projectstart.ReisterUserActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.MainActivity.MainActivity;
+import com.example.projectstart.R;
 import com.example.projectstart.TakeAPictureAndShowOnList.ShowUserImageActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 
@@ -63,15 +65,23 @@ public class RegisterUserActivity extends AppCompatActivity {
                 String role = editTextRole.getText().toString().trim();
 
                 if (password.equals(Constants.USERS_KEY_PASSWORD)) {
-                    user.setUserName(userName);
-                    user.setEmail(email);
-                    user.setRole(role);
-                    user.setPassword(password);
 
-                    int emailInsertionCandidateSize = db.getEmailCountByQuery(email);
-                    if (emailInsertionCandidateSize == 1) {
-                            Toast.makeText(RegisterUserActivity.this, "Please insert a non existing Email", Toast.LENGTH_SHORT).show();
+                    boolean isExistUser=db.checkIsUserExistsByUserName(userName);
+
+                    if(!isExistUser) {
+                        user.setUserName(userName);
+                        user.setEmail(email);
+                        user.setRole(role);
+                        user.setPassword(password);
+
+                        int emailInsertionCandidateSize = db.getEmailCountByQuery(email);
+                        if (emailInsertionCandidateSize == 1) {
+                            Toast.makeText(RegisterUserActivity.this, "Please insert a non existing Email!!", Toast.LENGTH_SHORT).show();
                             return;
+                        }
+                    }else{
+                        Toast.makeText(RegisterUserActivity.this, "Please insert a non existing Username!!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                     long val = db.addUser(user);

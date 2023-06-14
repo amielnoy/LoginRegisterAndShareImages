@@ -12,16 +12,22 @@
         android:theme="@style/Theme.Projectstart"
         tools:targetApi="31">
         <activity
+            android:name=".ShowUserLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserImagesListAndGridViews.ShowUserImagesAndUserNameActivity"
+            android:exported="false" />
+        <activity
             android:name=".TakeAPictureAndShowOnList.ShowUserImageActivity"
             android:exported="false" />
         <activity
             android:name=".TakeAPictureAndShowOnList.TakePictureActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterUserActivity"
+            android:name=".ReisterUserActivity.RegisterUserActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginActivity.LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_login" />
         <activity
@@ -35,7 +41,7 @@
         </activity>
 
         <service
-            android:name=".MusicService"
+            android:name=".MainActivity.MusicService"
             android:enabled="true"
             android:exported="true" />
     </application>

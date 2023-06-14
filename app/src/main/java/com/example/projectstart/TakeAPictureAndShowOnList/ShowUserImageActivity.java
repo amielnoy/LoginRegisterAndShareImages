@@ -13,9 +13,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.projectstart.LoginActivity;
+import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.R;
-import com.example.projectstart.RegisterUserActivity;
+import com.example.projectstart.ReisterUserActivity.RegisterUserActivity;
+import com.example.projectstart.UserImagesListAndGridViews.ShowUserImagesAndUserNameActivity;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class ShowUserImageActivity extends AppCompatActivity {
     Intent activityIntentRegisterUser;
     Intent activityIntentTakeAPicture;
     Intent activityIntentShowAPicture;
+
+    Intent activityIntentShowUserImages;
     Button buttonForward,buttonBackwards;
     ArrayList<UserImage> userImagesListOfPhotos;
     @Override
@@ -116,9 +119,14 @@ public class ShowUserImageActivity extends AppCompatActivity {
                 startActivity(activityIntentTakeAPicture);
                 return true;
             case R.id.menuitem_show_picture:
-                Toast.makeText(this, "Displaying user  picture...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Displaying user picture...", Toast.LENGTH_SHORT).show();
                 activityIntentShowAPicture = new Intent(this, ShowUserImageActivity.class);
                 startActivity(activityIntentShowAPicture);
+                return true;
+            case R.id.menuitem_show_user_images:
+                Toast.makeText(this, "Displaying user Images in Gridview...", Toast.LENGTH_SHORT).show();
+                activityIntentShowUserImages = new Intent(this, ShowUserImagesAndUserNameActivity.class);
+                startActivity(activityIntentShowUserImages);
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
