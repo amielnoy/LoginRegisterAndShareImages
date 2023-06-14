@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                     res = db.checkUser(email, password);
                 if (res == true || is_master_user_password) {
                         Intent AdminHomePage = new Intent(LoginActivity.this, TakePictureActivity.class);
-                        //Intent OtherPage = new Intent(LoginActivity.this, MainActivity.class);
                         Bundle b = new Bundle();
                         b.putString("textViewEmail", editTextUserName.getText().toString());
                         b.putString("textViewPassword", editTextPassword.getText().toString());

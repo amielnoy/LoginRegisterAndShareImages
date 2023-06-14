@@ -18,6 +18,7 @@ import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.MainActivity.MainActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
+import com.example.projectstart.UserImagesListAndGridViews.ShowUserImagesAndUserNameActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -35,6 +36,7 @@ public class TakePictureActivity extends AppCompatActivity {
 
     Intent activityIntentShowAPicture;
     Intent activityIntentMain;
+    Intent activityIntentShowUserImages;
 
 
     byte [] imageByteArray;
@@ -47,12 +49,10 @@ public class TakePictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_picture);
         userNameTextView=findViewById(R.id.textViewUseName);
         takenImageView=findViewById(R.id.take_picture_View);
-        //user_image_view=findViewById(R.id.user_show_image_view);
         System.out.println("debug");
-        //gotoDisplayAllUserImagesButton=findViewById(R.id.save_taken_image_button);
     }
 
-    byte[] contactArray;
+
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data)
     {
@@ -121,6 +121,11 @@ public class TakePictureActivity extends AppCompatActivity {
                 Toast.makeText(this, "Displaying user  picture...", Toast.LENGTH_SHORT).show();
                 activityIntentShowAPicture = new Intent(this, ShowUserImageActivity.class);
                 startActivity(activityIntentShowAPicture);
+                return true;
+            case R.id.menuitem_show_user_images:
+                Toast.makeText(this, "Displaying user Images in Gridview...", Toast.LENGTH_SHORT).show();
+                activityIntentShowUserImages = new Intent(this, ShowUserImagesAndUserNameActivity.class);
+                startActivity(activityIntentShowUserImages);
                 return true;
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();

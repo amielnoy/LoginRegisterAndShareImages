@@ -34,7 +34,7 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
 
     Intent activityIntentShowUserImages;
     Intent activityIntentMain;
-    ArrayList<User> arrayofUsers;
+    ArrayList<User> arrayOfUsers;
     ArrayList<UserImage> arrayOfUserImages;
     ListView usersListView;
 
@@ -47,15 +47,13 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_images_list_and_grid_views);
         usersListView=findViewById(R.id.users_list_view);
-        //usersListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 
         userImagesGridView=findViewById(R.id.user_images_grid_view);
-//        ArrayAdapter<UserImage> userImagesArrayAdapter=new ArrayAdapter<UserImage>(this,
-//                android.R.layout.ac);
 
         DatabaseHelper db=new DatabaseHelper(this);
-        arrayofUsers=db.getAllUsers();
-        UsersAdapter usersAdapter=new UsersAdapter(this,R.layout.activity_user_adapter,arrayofUsers);
+        arrayOfUsers=db.getAllUsers();
+        UsersAdapter usersAdapter=new UsersAdapter(this,R.layout.activity_user_adapter,arrayOfUsers);
         usersListView.setAdapter(usersAdapter);
 
         arrayOfUserImages = db.getAllUserImages();
@@ -69,7 +67,6 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Perform actions when an item is selected
                 String selectedUserName =((User)parent.getItemAtPosition(position)).getUserName();
                 Toast.makeText(getApplicationContext(), "Selected item: " + selectedUserName, Toast.LENGTH_SHORT).show();
                 arrayOfUserImages=db.getAllSpecificUserImages(selectedUserName);

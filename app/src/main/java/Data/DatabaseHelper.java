@@ -38,8 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //ID is the primary key table
-    //EMAIL must be unique
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         this.CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS " + USERS_TABLE_NAME + " ("
@@ -67,10 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /*
-     * CRUD OPERATIONS : CREATE -->  add user  , DELETE , UPDATE  METHODS .
-     *
-     */
+
 
     public long addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -185,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             user.setRole(cursor.getString(cursor.getColumnIndexOrThrow("role")));
             arrayOfUser.add(user);
 
-            //cursor.moveToNext();
+
         }
         return arrayOfUser;
 
@@ -329,7 +325,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // not clean code
+
     public String selectOneUserSendUserName(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -380,44 +376,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql_Insert="INSERT INTO "+ IMAGES_TABLE_NAME+"(UserImage,UserName) values(?,?)";
         SQLiteStatement statement=db.compileStatement(sql_Insert);
         statement.bindBlob(1,imageArray);
-        //userName="Liad";
         statement.bindString(2,userName);
 
         statement.execute();
-    }
-
-    public void addContact_with_img(String Name,String Email,String Phone,String Street, String City,byte[] Img)
-    {
-        SQLiteDatabase db=this.getWritableDatabase();
-        String sql_Insert="INSERT INTO contacts(Name,Email,Phone,Street,City,Img) values(?,?,?,?,?,?)";
-        SQLiteStatement statement=db.compileStatement(sql_Insert);
-        statement.bindString(1,Name);
-        statement.bindString(2,Email);
-        statement.bindString(3,Phone);
-        statement.bindString(4,Street);
-        statement.bindString(5,City);
-        statement.bindBlob(6,Img);
-        statement.execute();
-    }
-    public ArrayList<UserImage> getAllContacts()
-    {
-        ArrayList<UserImage>userImagesDetailsArrray=new ArrayList<>();
-        String st="select * from "+CREATE_USER_IMAGES_TABLE;
-        SQLiteDatabase db=getWritableDatabase();
-        Cursor cursor=db.rawQuery(st,null);
-
-        while (cursor.moveToNext())
-        {
-            UserImage currUserImage=new UserImage(0,null,"");
-            currUserImage.setUserName(cursor.getString(cursor.getColumnIndexOrThrow("UserName")));
-            currUserImage.setUserImage((cursor.getBlob(cursor.getColumnIndexOrThrow("Img"))));
-
-            userImagesDetailsArrray.add(currUserImage);
-        }
-        return userImagesDetailsArrray;
-
-
-
     }
 
 

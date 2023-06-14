@@ -36,7 +36,6 @@ public class GridViewAdapter extends ArrayAdapter<UserImage> {
 
         View listitemView = convertView;
         if (listitemView == null) {
-            // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.activity_grid_view_adapte_layout, parent, false);
         }
 

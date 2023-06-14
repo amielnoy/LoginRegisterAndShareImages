@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_ground1"
     tools:context=".MainActivity.MainActivity">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="111dp"
         android:layout_marginTop="92dp"
         android:text="Click on Play Music if you want to listen to music while your taking photos"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="Play Music"
+        android:background="@color/cardview_shadow_end_color"
         android:onClick="onStart"
         app:layout_constraintEnd_toEndOf="@+id/message_music"
         app:layout_constraintStart_toStartOf="@+id/message_music"
@@ -33,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="148dp"
+        android:background="@color/cardview_shadow_end_color"
         android:onClick="onStop"
         android:text="Stop music"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button_play"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button_play"
         app:layout_constraintTop_toBottomOf="@+id/button_play"
         app:layout_constraintVertical_bias="0.0" />

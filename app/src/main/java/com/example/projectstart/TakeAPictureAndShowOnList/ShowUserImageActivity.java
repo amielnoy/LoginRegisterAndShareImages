@@ -78,8 +78,10 @@ public class ShowUserImageActivity extends AppCompatActivity {
     public void goToNextImageListener(View view){
         if(currUserImageIndex<userImagesListOfPhotos.size()-1)
           currUserImageIndex+=1;
+        else
+            Toast.makeText(this, "You've got to Last Image", Toast.LENGTH_SHORT).show();
         if(currUserImageIndex<userImagesListOfPhotos.size()) {
-            UserImage CurrUserImage = userImagesListOfPhotos.get(currUserImageIndex-1);
+            UserImage CurrUserImage = userImagesListOfPhotos.get(currUserImageIndex);
             byte[] imageBytesArray = CurrUserImage.getLastTakenUserImage();
 
             if (imageBytesArray != null) {
