@@ -1,4 +1,4 @@
-package com.example.projectstart.ReisterUserActivity;
+package com.example.projectstart.RegisterUserActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

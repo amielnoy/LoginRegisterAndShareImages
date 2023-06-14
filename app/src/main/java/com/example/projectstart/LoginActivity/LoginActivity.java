@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.projectstart.R;
-import com.example.projectstart.ReisterUserActivity.RegisterUserActivity;
+import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 
 import Data.DatabaseHelper;
@@ -28,17 +28,22 @@ public class LoginActivity extends AppCompatActivity {
     private static String currentLoggedInUserName;
     private static String currentLoggedInEmail;
 
-    private static boolean is_master_user_password=true;
+    private static Boolean res=false;
+    private static boolean is_master_user_password=false;
 
     public static String getCurrentLoggedInUserName(){
         return currentLoggedInUserName;
     }
-    public static String getCurrentLoggedInEmail(){
-        return currentLoggedInEmail;
-    }
 
     public static boolean getCurrentLoggedInMaster(){
         return is_master_user_password;
+    }
+
+    public static boolean getCurrentUserIsLogged(){
+        if(is_master_user_password || res)
+            return true;
+        else
+            return false;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     is_master_user_password=true;
                 else
                     is_master_user_password=false;
-                Boolean res=false;
+
                 Log.d("IDdetails", String.valueOf(user.getId()));
                 if(!is_master_user_password)
                     res = db.checkUser(email, password);
@@ -122,11 +127,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(activityIntentLogin);
                 return true;
             case R.id.menuitem_register:
-                Toast.makeText(this, "Register user...", Toast.LENGTH_SHORT).show();
-                activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
-                startActivity(activityIntentRegisterUser);
-                return true;
-
+                if(is_master_user_password) {
+                    Toast.makeText(this, "Register user...", Toast.LENGTH_SHORT).show();
+                    activityIntentRegisterUser = new Intent(this, RegisterUserActivity.class);
+                    startActivity(activityIntentRegisterUser);
+                    return true;
+                }
             case R.id.menuitem_exit:
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
                 this.finishAffinity();

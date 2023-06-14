@@ -24,7 +24,7 @@
             android:name=".TakeAPictureAndShowOnList.TakePictureActivity"
             android:exported="false" />
         <activity
-            android:name=".ReisterUserActivity.RegisterUserActivity"
+            android:name=".RegisterUserActivity.RegisterUserActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity.LoginActivity"

@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.projectstart.LoginActivity.LoginActivity;
 import com.example.projectstart.R;
-import com.example.projectstart.ReisterUserActivity.RegisterUserActivity;
+import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.ShowUserImageActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
 
