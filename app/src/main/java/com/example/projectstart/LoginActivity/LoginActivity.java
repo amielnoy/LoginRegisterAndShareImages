@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.projectstart.MainActivity.MainActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.TakePictureActivity;
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextUserName, editTextPassword;
     Button buttonLogin;
     DatabaseHelper db;
-    Intent activityIntentLogin, activityIntentRegisterUser;
+    Intent activityIntentLogin, activityIntentRegisterUser,activityIntentMain;
     private static String currentLoggedInUserName;
     private static String currentLoggedInEmail;
 
@@ -121,6 +122,11 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.menuitem_main_screen:
+                Toast.makeText(this, "Play Music...", Toast.LENGTH_SHORT).show();
+                activityIntentMain = new Intent(this, MainActivity.class);
+                startActivity(activityIntentMain);
+                return true;
             case R.id.menuitem_login:
                 Toast.makeText(this, "login user...", Toast.LENGTH_SHORT).show();
                 activityIntentLogin = new Intent(this, LoginActivity.class);

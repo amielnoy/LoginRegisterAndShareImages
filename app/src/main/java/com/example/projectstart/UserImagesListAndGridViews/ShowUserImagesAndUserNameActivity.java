@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.projectstart.LoginActivity.LoginActivity;
+import com.example.projectstart.MainActivity.MainActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.TakeAPictureAndShowOnList.ShowUserImageActivity;
@@ -32,6 +33,7 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
     Intent activityIntentShowAPicture;
 
     Intent activityIntentShowUserImages;
+    Intent activityIntentMain;
     ArrayList<User> arrayofUsers;
     ArrayList<UserImage> arrayOfUserImages;
     ListView usersListView;
@@ -94,6 +96,11 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.menuitem_main_screen:
+                Toast.makeText(this, "Play Music...", Toast.LENGTH_SHORT).show();
+                activityIntentMain = new Intent(this, MainActivity.class);
+                startActivity(activityIntentMain);
+                return true;
             case R.id.menuitem_login:
                 Toast.makeText(this, "login user...", Toast.LENGTH_SHORT).show();
                 activityIntentLogin = new Intent(this, LoginActivity.class);

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.projectstart.LoginActivity.LoginActivity;
+import com.example.projectstart.MainActivity.MainActivity;
 import com.example.projectstart.R;
 import com.example.projectstart.RegisterUserActivity.RegisterUserActivity;
 import com.example.projectstart.UserImagesListAndGridViews.ShowUserImagesAndUserNameActivity;
@@ -30,7 +31,7 @@ public class ShowUserImageActivity extends AppCompatActivity {
     Intent activityIntentRegisterUser;
     Intent activityIntentTakeAPicture;
     Intent activityIntentShowAPicture;
-
+    Intent activityIntentMain;
     Intent activityIntentShowUserImages;
     Button buttonForward,buttonBackwards;
     ArrayList<UserImage> userImagesListOfPhotos;
@@ -87,7 +88,7 @@ public class ShowUserImageActivity extends AppCompatActivity {
             }
         }else{
             currUserImageIndex-=1;
-            Toast.makeText(this, "You've got to last Image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You've got to Last Image", Toast.LENGTH_SHORT).show();
         }
     }
     @Override
@@ -103,8 +104,13 @@ public class ShowUserImageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.menuitem_main_screen:
+                Toast.makeText(this, "Play Music...", Toast.LENGTH_SHORT).show();
+                activityIntentMain = new Intent(this, MainActivity.class);
+                startActivity(activityIntentMain);
+                return true;
             case R.id.menuitem_login:
-                Toast.makeText(this, "login user...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Login user...", Toast.LENGTH_SHORT).show();
                 activityIntentLogin = new Intent(this, LoginActivity.class);
                 startActivity(activityIntentLogin);
                 return true;

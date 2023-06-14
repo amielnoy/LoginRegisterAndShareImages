@@ -33,9 +33,9 @@ public class RegisterUserActivity extends AppCompatActivity {
     Intent activityIntentTakeAPicture;
 
     Intent activityIntentShowAPicture;
+    Intent activityIntentMain;
 
 
-//    Intent activityIntentRegisterUser,activityIntentLogin;
 
 
 
@@ -119,6 +119,11 @@ public class RegisterUserActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.menuitem_main_screen:
+                Toast.makeText(this, "Play Music...", Toast.LENGTH_SHORT).show();
+                activityIntentMain = new Intent(this, MainActivity.class);
+                startActivity(activityIntentMain);
+                return true;
             case R.id.menuitem_login:
                 Toast.makeText(this, "login user...", Toast.LENGTH_SHORT).show();
                 activityIntentLogin = new Intent(this, LoginActivity.class);
