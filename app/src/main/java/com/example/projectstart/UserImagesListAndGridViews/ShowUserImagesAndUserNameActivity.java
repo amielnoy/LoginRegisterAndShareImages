@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,38 +43,62 @@ public class ShowUserImagesAndUserNameActivity extends AppCompatActivity {
     GridViewAdapter gridUserImagesViewAdapter;
 
     GridView userImagesGridView;
+    // Declare db here to make it accessible in the OnItemClickListener
+    DatabaseHelper db;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_images_list_and_grid_views);
         usersListView=findViewById(R.id.users_list_view);
-
-
         userImagesGridView=findViewById(R.id.user_images_grid_view);
 
-        DatabaseHelper db=new DatabaseHelper(this);
-        arrayOfUsers=db.getAllUsers();
-        UsersAdapter usersAdapter=new UsersAdapter(this,R.layout.activity_user_adapter,arrayOfUsers);
-        usersListView.setAdapter(usersAdapter);
+        try {
+            // Initialize the DatabaseHelper
+            db = new DatabaseHelper(this);
 
-        arrayOfUserImages = db.getAllUserImages();
+            // Fetch initial data from the database
+            arrayOfUsers = db.getAllUsers();
+            arrayOfUserImages = db.getAllUserImages();
 
-        gridUserImagesViewAdapter = new GridViewAdapter(this, arrayOfUserImages);
-        userImagesGridView.setAdapter(gridUserImagesViewAdapter);
+            // Set up the Users ListView
+            UsersAdapter usersAdapter = new UsersAdapter(this, arrayOfUsers);
+            usersListView.setAdapter(usersAdapter);
+
+            // Set up the User Images GridView
+            gridUserImagesViewAdapter = new GridViewAdapter(this, arrayOfUserImages);
+            userImagesGridView.setAdapter(gridUserImagesViewAdapter);
+
+        } catch (SQLiteException e) {
+            // Log the error for debugging purposes
+            Log.e("DatabaseError", "Error accessing database: " + e.getMessage());
+            // Inform the user that something went wrong
+            Toast.makeText(this, "Database error. Could not load data.", Toast.LENGTH_LONG).show();
+            // Optionally, you could finish the activity if it cannot function without the database
+            // finish();
+        }
+
 
         usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedUserName =((User)parent.getItemAtPosition(position)).getUserName();
-                Toast.makeText(getApplicationContext(), "Selected item: " + selectedUserName, Toast.LENGTH_SHORT).show();
-                arrayOfUserImages=db.getAllSpecificUserImages(selectedUserName);
-                gridUserImagesViewAdapter.clear();
-                gridUserImagesViewAdapter.addAll(arrayOfUserImages);
-                userImagesGridView.setAdapter(gridUserImagesViewAdapter);
+                try {
+                    String selectedUserName =((User)parent.getItemAtPosition(position)).getUserName();
+                    Toast.makeText(getApplicationContext(), "Selected item: " + selectedUserName, Toast.LENGTH_SHORT).show();
+
+                    // Check if db was initialized before using it
+                    if (db != null) {
+                        arrayOfUserImages = db.getAllSpecificUserImages(selectedUserName);
+                        gridUserImagesViewAdapter.clear();
+                        gridUserImagesViewAdapter.addAll(arrayOfUserImages);
+                        // No need to set the adapter again, just notify it that the data has changed
+                        gridUserImagesViewAdapter.notifyDataSetChanged();
+                    }
+                } catch (SQLiteException e) {
+                    Log.e("DatabaseError", "Error filtering user images: " + e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Error loading images for this user.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

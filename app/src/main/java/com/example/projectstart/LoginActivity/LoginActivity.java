@@ -142,10 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
                 this.finishAffinity();
                 return true;
-            case R.id.menuitem_exit:
-                Toast.makeText(this, "Exiting...", Toast.LENGTH_SHORT).show();
-                this.finishAffinity();
-                return true;
+
 
         }
 
